@@ -168,25 +168,31 @@ public class Listeners implements Listener {
                         
                         if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("EVO")) {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled")) {
-                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
-                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.BLUE + "EVO Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + ".");
-                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                                	NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                                	NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                	int Purity = PlayerPersisted.getInt("jrmcAlign");
+                                
+                                	if (Purity >= 51) {
+                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                	} else {
+                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                	}
                                     PlayerPersisted.put("jrmcState", "");
                                     PlayerPersisted.put("jrmcStatusEff", "");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
-                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
-                                NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-                                int Purity = PlayerPersisted.getInt("jrmcAlign");
+                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
+                                	NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                                	NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                	int Purity = PlayerPersisted.getInt("jrmcAlign");
                                 
-                                if (Purity >= 51) {
-                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
-                                } else {
-                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
-                                }
+                                	if (Purity >= 51) {
+                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                	} else {
+                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                	}
                                     
                                     final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
                                     FireworkMeta meta = fw.getFireworkMeta();

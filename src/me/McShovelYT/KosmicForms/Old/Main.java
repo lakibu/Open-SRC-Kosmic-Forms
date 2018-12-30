@@ -82,7 +82,7 @@ public class Main extends JavaPlugin implements Listener {
                                 this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOLevel", args[2]);
                                 this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.isEVOEnabled", false);
                                 this.saveConfig();
-                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.BLUE + " EVO form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
+                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.BLUE + " Mastered SS Blue form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[1] + ChatColor.RED + " Is not a valid form");
                             }
@@ -165,7 +165,7 @@ public class Main extends JavaPlugin implements Listener {
                                 if (args[0].equalsIgnoreCase("set")) {
                                     this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP", args[3]);
                                     this.saveConfig();
-                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.BLUE + " EVO form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.BLUE + " Mastered SS Blue form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
                                 } else if (args[0].equalsIgnoreCase("add")) {
                                     if (this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP") == null) {
                                         this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP", "0");
@@ -175,7 +175,7 @@ public class Main extends JavaPlugin implements Listener {
                                     x2 = Integer.parseInt(args[3]);
                                     this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP", x + x2);
                                     this.saveConfig();
-                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.BLUE + " EVO form TP ");
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.BLUE + " Mastered SS Blue form TP ");
                                 } else {
                                     sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
                                 }
