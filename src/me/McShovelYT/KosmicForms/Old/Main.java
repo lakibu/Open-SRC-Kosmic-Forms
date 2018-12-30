@@ -113,7 +113,7 @@ public class Main extends JavaPlugin implements Listener {
                                     this.saveConfig();
                                     sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.DARK_PURPLE + " G.O.D form TP ");
                                 } else {
-                                    sender.sendMessage(ChatColor.RED + "/sGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
+                                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
                                 }
                             } else if (args[2].equalsIgnoreCase("UI")) {
                                 if (args[0].equalsIgnoreCase("set")) {
