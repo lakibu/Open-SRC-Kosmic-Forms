@@ -78,13 +78,18 @@ public class Main extends JavaPlugin implements Listener {
                                 this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.isSKEnabled", false);
                                 this.saveConfig();
                                 sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.RED + " S.K form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
+                            } else if (args[1].equalsIgnoreCase("EVO")) {
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOLevel", args[2]);
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                                this.saveConfig();
+                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.BLUE + " EVO form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[1] + ChatColor.RED + " Is not a valid form");
                             }
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/kSetForm <USERNAME> <GOD/UI> <LEVEL>");
+                    sender.sendMessage(ChatColor.RED + "/kSetForm <USERNAME> <GOD/UI/SK/EVO> <LEVEL>");
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
@@ -150,9 +155,27 @@ public class Main extends JavaPlugin implements Listener {
 
                                     x = Integer.parseInt(this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKTP"));
                                     x2 = Integer.parseInt(args[3]);
-                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.UITP", x + x2);
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKTP", x + x2);
                                     this.saveConfig();
                                     sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.RED + " S.K form TP ");
+                                } else {
+                                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
+                                }
+                            } else if (args[2].equalsIgnoreCase("EVO")) {
+                                if (args[0].equalsIgnoreCase("set")) {
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP", args[3]);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.BLUE + " EVO form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
+                                } else if (args[0].equalsIgnoreCase("add")) {
+                                    if (this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP") == null) {
+                                        this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP", "0");
+                                    }
+
+                                    x = Integer.parseInt(this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP"));
+                                    x2 = Integer.parseInt(args[3]);
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.EVOTP", x + x2);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.BLUE + " EVO form TP ");
                                 } else {
                                     sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
                                 }
@@ -162,7 +185,7 @@ public class Main extends JavaPlugin implements Listener {
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <GOD/UI> <ANOUNT>");
+                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <GOD/UI/SK/EVO> <ANOUNT>");
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
@@ -514,6 +537,106 @@ public class Main extends JavaPlugin implements Listener {
 
         if (this.getConfig().getDouble("FormRegens.SK.Level5") == 0.0D) {
             this.getConfig().set("FormRegens.SK.Level5", 600000);
+            this.saveConfig();
+        }
+        
+        if (this.getConfig().getInt("FormCosts.EVO.Level1") == 0) {
+            this.getConfig().set("FormCosts.EVO.Level1", 1000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.EVO.Level1") == 0) {
+            this.getConfig().set("FormDamages.EVO.Level1", 1000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.EVO.Level1") == 0.0D) {
+            this.getConfig().set("FormDefences.EVO.Level1", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.EVO.Level2") == 0) {
+            this.getConfig().set("FormCosts.EVO.Level2", 1500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.EVO.Level2") == 0) {
+            this.getConfig().set("FormDamages.EVO.Level2", 1500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.EVO.Level2") == 0.0D) {
+            this.getConfig().set("FormDefences.EVO.Level2", 0.15D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.EVO.Level3") == 0) {
+            this.getConfig().set("FormCosts.EVO.Level3", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.EVO.Level3") == 0) {
+            this.getConfig().set("FormDamages.EVO.Level3", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.EVO.Level3") == 0.0D) {
+            this.getConfig().set("FormDefences.EVO.Level3", 0.2D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.EVO.Level4") == 0) {
+            this.getConfig().set("FormCosts.EVO.Level4", 2500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.EVO.Level4") == 0) {
+            this.getConfig().set("FormDamages.EVO.Level4", 2500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.EVO.Level4") == 0.0D) {
+            this.getConfig().set("FormDefences.EVO.Level4", 0.25D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.EVO.Level5") == 0) {
+            this.getConfig().set("FormCosts.EVO.Level5", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.EVO.Level5") == 0) {
+            this.getConfig().set("FormDamages.EVO.Level5", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.EVO.Level5") == 0.0D) {
+            this.getConfig().set("FormDefences.EVO.Level5", 0.3D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.EVO.Level1") == 0.0D) {
+            this.getConfig().set("FormRegens.EVO.Level1", 100000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.EVO.Level2") == 0.0D) {
+            this.getConfig().set("FormRegens.EVO.Level2", 150000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.EVO.Level3") == 0.0D) {
+            this.getConfig().set("FormRegens.EVO.Level3", 200000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.EVO.Level4") == 0.0D) {
+            this.getConfig().set("FormRegens.EVO.Level4", 250000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.EVO.Level5") == 0.0D) {
+            this.getConfig().set("FormRegens.EVO.Level5", 300000);
             this.saveConfig();
         }
 

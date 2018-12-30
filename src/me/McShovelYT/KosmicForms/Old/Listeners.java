@@ -140,17 +140,66 @@ public class Listeners implements Listener {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + ".");
                                     NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                                     NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-                                    PlayerPersisted.put("jrmcStatusEff", "");
+                                    PlayerPersisted.put("jrmcState2", "");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", true);
-                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + "!");
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + "!");
                                     
                                     final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
                                     FireworkMeta meta = fw.getFireworkMeta();
                                     meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.fromRGB(80, 0, 0)).withFade(Color.RED).with(Type.BALL_LARGE).build());
                                     meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.RED).withFade(Color.fromRGB(80, 0, 0)).with(Type.BURST).build());
+                                    meta.setPower(0);
+                                    fw.setFireworkMeta(meta);
+                                    (new BukkitRunnable() {
+                                    	public void run() {
+                                    		fw.detonate();
+                                    	}
+                                    }).runTaskLater(plugin, 2L);
+                                
+
+                                this.clickPlayers.put(e.getPlayer().getName(), currTime);
+                            }
+
+                            this.plugin.saveConfig();
+                        }
+                        
+                        if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("EVO")) {
+                            if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled")) {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.BLUE + "EVO Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + ".");
+                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                    PlayerPersisted.put("jrmcState", "");
+                                    PlayerPersisted.put("jrmcStatusEff", "");
+                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
+                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                            } else {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
+                                NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                                NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                int Purity = PlayerPersisted.getInt("jrmcAlign");
+                                
+                                if (Purity >= 51) {
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                } else {
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                }
+                                    
+                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
+                                    FireworkMeta meta = fw.getFireworkMeta();
+                                    
+
+                                    
+                                    if (Purity >= 51) {
+                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.AQUA).withFade(Color.BLUE).with(Type.BALL_LARGE).build());
+                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.BLUE).withFade(Color.AQUA).with(Type.BURST).build());
+                                    } else {
+                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.PURPLE).withFade(Color.FUCHSIA).with(Type.BALL_LARGE).build());
+                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.FUCHSIA).withFade(Color.PURPLE).with(Type.BURST).build());
+                                    }
                                     meta.setPower(0);
                                     fw.setFireworkMeta(meta);
                                     (new BukkitRunnable() {
@@ -401,8 +450,81 @@ public class Listeners implements Listener {
                     }
                 }
             }
-        }
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".EVOForm.isEVOEnabled")) {
+                if (!damaged.isOp()) {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
 
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) >= 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+                } else {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) >= 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.EVO.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+                }
+            }
+        }
+        
         if (e.getDamager() instanceof Player) {
             damaged = (Player)e.getDamager();
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".GodForm.isGodEnabled")) {
@@ -468,6 +590,28 @@ public class Listeners implements Listener {
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 5) {
                     ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level5"));
+                }
+            }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".EVOForm.isEVOEnabled")) {
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 1) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level1"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 2) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level2"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 3) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level3"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 4) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level4"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) >= 5) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level5"));
                 }
             }
         }

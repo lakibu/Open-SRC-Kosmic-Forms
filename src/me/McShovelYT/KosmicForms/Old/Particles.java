@@ -88,7 +88,7 @@ public class Particles {
                         }
                     }
                     
-                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".UIForm.isUIEnabled")) {
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".SKForm.isSKEnabled")) {
                         loc = null;
                         loc = player.getLocation();
                         var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
@@ -102,6 +102,56 @@ public class Particles {
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
                             packet = new PacketPlayOutWorldParticles("", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
                             ((CraftPlayer)player2).getHandle().playerConnection.sendPacket(packet);
+                        }
+                    }
+                    
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".EVOForm.isEVOEnabled")) {
+                        loc = null;
+                        loc = player.getLocation();
+                        var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+
+                        for(var7 = 0; var7 < var8; ++var7) {
+                            player2 = var9[var7];
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int Race = PlayerPersisted.getInt("jrmcRace");
+                            int Purity = PlayerPersisted.getInt("jrmcAlign");
+                            
+                            if (Race == 0) {
+                                PlayerPersisted.put("jrmcState", 3);
+                                PlayerPersisted.put("jrmcStatusEff", "B");
+                            }
+
+                            if (Race == 1) {
+                                PlayerPersisted.put("jrmcState", 15);
+                                if (Purity >= 51) {
+                                	PlayerPersisted.put("jrmcStatusEff", "B");
+                                } else {
+                                	PlayerPersisted.put("jrmcStatusEff", "VB");
+                                }
+                            }
+
+                            if (Race == 2) {
+                                PlayerPersisted.put("jrmcState", 15);
+                                if (Purity >= 51) {
+                                	PlayerPersisted.put("jrmcStatusEff", "B");
+                                } else {
+                                	PlayerPersisted.put("jrmcStatusEff", "VB");
+                                }
+                            }
+
+                            if (Race == 3) {
+                                PlayerPersisted.put("jrmcState", 3);
+                                PlayerPersisted.put("jrmcStatusEff", "B");
+                            }
+
+                            if (Race == 4) {
+                                PlayerPersisted.put("jrmcState", 6);
+                                PlayerPersisted.put("jrmcStatusEff", "B");
+                            }
+                            
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
                         }
                     }
                 }
@@ -267,6 +317,58 @@ public class Particles {
 
                         if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".UIForm.UILevel")) >= 5) {
                             x = Particles.plugin.getConfig().getInt("FormRegens.UI.Level5");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+                    }
+                    
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".EVOForm.isEVOEnabled")) {
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".EVOForm.EVOLevel")) == 1) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.EVO.Level1");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".EVOForm.EVOLevel")) == 2) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.EVO.Level2");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".EVOForm.EVOLevel")) == 3) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.EVO.Level3");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".EVOForm.EVOLevel")) == 4) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.EVO.Level4");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".EVOForm.EVOLevel")) >= 5) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.EVO.Level5");
                             NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                             NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                             int bdy = PlayerPersisted.getInt("jrmcBdy");
