@@ -87,6 +87,23 @@ public class Particles {
                             ((CraftPlayer)player2).getHandle().playerConnection.sendPacket(packet);
                         }
                     }
+                    
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".UIForm.isUIEnabled")) {
+                        loc = null;
+                        loc = player.getLocation();
+                        var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+
+                        for(var7 = 0; var7 < var8; ++var7) {
+                            player2 = var9[var7];
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            PlayerPersisted.put("jrmcState2", 8);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                            packet = new PacketPlayOutWorldParticles("", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
+                            ((CraftPlayer)player2).getHandle().playerConnection.sendPacket(packet);
+                        }
+                    }
                 }
 
             }
@@ -146,6 +163,58 @@ public class Particles {
 
                         if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".GodForm.GodLevel")) >= 5) {
                             x = Particles.plugin.getConfig().getInt("FormRegens.GOD.Level5");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+                    }
+                    
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".SKForm.isSKEnabled")) {
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SKForm.SKLevel")) == 1) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.SK.Level1");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SKForm.SKLevel")) == 2) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.SK.Level2");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SKForm.SKLevel")) == 3) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.SK.Level3");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SKForm.SKLevel")) == 4) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.SK.Level4");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SKForm.SKLevel")) == 5) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.SK.Level5");
                             NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                             NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                             int bdy = PlayerPersisted.getInt("jrmcBdy");

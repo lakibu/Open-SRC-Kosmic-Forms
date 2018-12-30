@@ -73,6 +73,11 @@ public class Main extends JavaPlugin implements Listener {
                                 this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".UIForm.isUIEnabled", false);
                                 this.saveConfig();
                                 sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + " U.I form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
+                            } else if (args[1].equalsIgnoreCase("SK")) {
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKLevel", args[2]);
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.isSKEnabled", false);
+                                this.saveConfig();
+                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.RED + " S.K form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[1] + ChatColor.RED + " Is not a valid form");
                             }
@@ -130,6 +135,24 @@ public class Main extends JavaPlugin implements Listener {
                                     this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".UIForm.UITP", x + x2);
                                     this.saveConfig();
                                     sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + " U.I form TP ");
+                                } else {
+                                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
+                                }
+                            } else if (args[2].equalsIgnoreCase("SK")) {
+                                if (args[0].equalsIgnoreCase("set")) {
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKTP", args[3]);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.RED + " S.K form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
+                                } else if (args[0].equalsIgnoreCase("add")) {
+                                    if (this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKTP") == null) {
+                                        this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKTP", "0");
+                                    }
+
+                                    x = Integer.parseInt(this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.SKTP"));
+                                    x2 = Integer.parseInt(args[3]);
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SKForm.UITP", x + x2);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.RED + " S.K form TP ");
                                 } else {
                                     sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
                                 }
@@ -391,6 +414,106 @@ public class Main extends JavaPlugin implements Listener {
 
         if (this.getConfig().getDouble("FormRegens.UI.Level5") == 0.0D) {
             this.getConfig().set("FormRegens.UI.Level5", 600000);
+            this.saveConfig();
+        }
+        
+        if (this.getConfig().getInt("FormCosts.SK.Level1") == 0) {
+            this.getConfig().set("FormCosts.SK.Level1", 100000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SK.Level1") == 0) {
+            this.getConfig().set("FormDamages.SK.Level1", 1000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SK.Level1") == 0.0D) {
+            this.getConfig().set("FormDefences.SK.Level1", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SK.Level2") == 0) {
+            this.getConfig().set("FormCosts.SK.Level2", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SK.Level2") == 0) {
+            this.getConfig().set("FormDamages.SK.Level2", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SK.Level2") == 0.0D) {
+            this.getConfig().set("FormDefences.SK.Level2", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SK.Level3") == 0) {
+            this.getConfig().set("FormCosts.SK.Level3", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SK.Level3") == 0) {
+            this.getConfig().set("FormDamages.SK.Level3", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SK.Level3") == 0.0D) {
+            this.getConfig().set("FormDefences.SK.Level3", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SK.Level4") == 0) {
+            this.getConfig().set("FormCosts.SK.Level4", 5000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SK.Level4") == 0) {
+            this.getConfig().set("FormDamages.SK.Level4", 5000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SK.Level4") == 0.0D) {
+            this.getConfig().set("FormDefences.SK.Level4", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SK.Level5") == 0) {
+            this.getConfig().set("FormCosts.SK.Level5", 6000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SK.Level5") == 0) {
+            this.getConfig().set("FormDamages.SK.Level5", 6000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SK.Level5") == 0.0D) {
+            this.getConfig().set("FormDefences.SK.Level5", 0.6D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SK.Level1") == 0.0D) {
+            this.getConfig().set("FormRegens.SK.Level1", 200000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SK.Level2") == 0.0D) {
+            this.getConfig().set("FormRegens.SK.Level2", 300000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SK.Level3") == 0.0D) {
+            this.getConfig().set("FormRegens.SK.Level3", 400000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SK.Level4") == 0.0D) {
+            this.getConfig().set("FormRegens.SK.Level4", 500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SK.Level5") == 0.0D) {
+            this.getConfig().set("FormRegens.SK.Level5", 600000);
             this.saveConfig();
         }
 

@@ -133,6 +133,38 @@ public class Listeners implements Listener {
 
                             this.plugin.saveConfig();
                         }
+                        
+                        if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("SK")) {
+                            if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled")) {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + ".");
+                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                    PlayerPersisted.put("jrmcStatusEff", "");
+                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
+                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                            } else {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", true);
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + "!");
+                                    
+                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
+                                    FireworkMeta meta = fw.getFireworkMeta();
+                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.fromRGB(80, 0, 0)).withFade(Color.RED).with(Type.BALL_LARGE).build());
+                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.RED).withFade(Color.fromRGB(80, 0, 0)).with(Type.BURST).build());
+                                    meta.setPower(0);
+                                    fw.setFireworkMeta(meta);
+                                    (new BukkitRunnable() {
+                                    	public void run() {
+                                    		fw.detonate();
+                                    	}
+                                    }).runTaskLater(plugin, 2L);
+                                
+
+                                this.clickPlayers.put(e.getPlayer().getName(), currTime);
+                            }
+
+                            this.plugin.saveConfig();
+                        }
                     }
                 }
             }
@@ -295,6 +327,80 @@ public class Listeners implements Listener {
                     }
                 }
             }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".SKForm.isSKEnabled")) {
+                if (!damaged.isOp()) {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+                } else {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SK.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+                }
+            }
         }
 
         if (e.getDamager() instanceof Player) {
@@ -340,6 +446,28 @@ public class Listeners implements Listener {
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".UIForm.UILevel")) >= 5) {
                     ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.UI.Level5"));
+                }
+            }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".SKForm.isSKEnabled")) {
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 1) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level1"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 2) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level2"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 3) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level3"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 4) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level4"));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 5) {
+                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level5"));
                 }
             }
         }
