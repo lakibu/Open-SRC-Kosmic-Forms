@@ -3,7 +3,7 @@ Project to make you have custom transformations.
 
 ## Getting Started 
 You may use this plugin to create your transformations but you aren't allowed to take credit for it,
-Please give credit to the rightful owners, So getting started you can clone this respo,
+Please give credit to the rightful owners, So getting started you can clone this repo,
 And then compile it as a jar, in eclipse/intellij with imports of craftbukkit 1.7.10
 
 ## Dependencies
