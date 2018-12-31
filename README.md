@@ -11,3 +11,4 @@ And then compile it as a jar, in eclipse/intellij with imports of CraftBukkit 1.
 
 ### Authors/Contributors
 **Dbzfan1023** - *Lead Dev* (https://github.com/Dbzfan1023)
+**SSuperKing** - *NBT Manager(Helper)* (https://github.com/SSuperKing)
