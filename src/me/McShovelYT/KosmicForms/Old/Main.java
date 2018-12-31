@@ -23,6 +23,7 @@ public class Main extends JavaPlugin implements Listener {
         new Particles(this);
         Particles.particles();
         Particles.regen();
+        this.getLogger().warning("This ain't it chief");
     }
 
     public void onDisable() {
@@ -83,13 +84,18 @@ public class Main extends JavaPlugin implements Listener {
                                 this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".EVOForm.isEVOEnabled", false);
                                 this.saveConfig();
                                 sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.BLUE + " Mastered SS Blue form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
+                            } else if (args[1].equalsIgnoreCase("MY")) {
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.MYLevel", args[2]);
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.isMYEnabled", false);
+                                this.saveConfig();
+                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.WHITE + " Mystic form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[1] + ChatColor.RED + " Is not a valid form");
                             }
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/kSetForm <USERNAME> <GOD/UI/SK/EVO> <LEVEL>");
+                    sender.sendMessage(ChatColor.RED + "/kSetForm <USERNAME> <GOD/UI/SK/EVO/MY> <LEVEL>");
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
@@ -179,13 +185,31 @@ public class Main extends JavaPlugin implements Listener {
                                 } else {
                                     sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
                                 }
+                            } else if (args[2].equalsIgnoreCase("MY")) {
+                                if (args[0].equalsIgnoreCase("set")) {
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.MYTP", args[3]);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.WHITE + " Mystic form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
+                                } else if (args[0].equalsIgnoreCase("add")) {
+                                    if (this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.MYTP") == null) {
+                                        this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.MYTP", "0");
+                                    }
+
+                                    x = Integer.parseInt(this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.MYTP"));
+                                    x2 = Integer.parseInt(args[3]);
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.MYTP", x + x2);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.WHITE + " Mystic form TP ");
+                                } else {
+                                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
+                                }
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[2] + ChatColor.RED + " Is not a valid form");
                             }
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <GOD/UI/SK/EVO> <ANOUNT>");
+                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <GOD/UI/SK/EVO/MY> <ANOUNT>");
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
@@ -637,6 +661,106 @@ public class Main extends JavaPlugin implements Listener {
 
         if (this.getConfig().getDouble("FormRegens.EVO.Level5") == 0.0D) {
             this.getConfig().set("FormRegens.EVO.Level5", 300000);
+            this.saveConfig();
+        }
+        
+        if (this.getConfig().getInt("FormCosts.MY.Level1") == 0) {
+            this.getConfig().set("FormCosts.MY.Level1", 1000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.MY.Level1") == 0) {
+            this.getConfig().set("FormDamages.MY.Level1", 1000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.MY.Level1") == 0.0D) {
+            this.getConfig().set("FormDefences.MY.Level1", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.MY.Level2") == 0) {
+            this.getConfig().set("FormCosts.MY.Level2", 1500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.MY.Level2") == 0) {
+            this.getConfig().set("FormDamages.MY.Level2", 1500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.MY.Level2") == 0.0D) {
+            this.getConfig().set("FormDefences.MY.Level2", 0.15D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.MY.Level3") == 0) {
+            this.getConfig().set("FormCosts.MY.Level3", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.MY.Level3") == 0) {
+            this.getConfig().set("FormDamages.MY.Level3", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.MY.Level3") == 0.0D) {
+            this.getConfig().set("FormDefences.MY.Level3", 0.2D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.MY.Level4") == 0) {
+            this.getConfig().set("FormCosts.MY.Level4", 2500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.MY.Level4") == 0) {
+            this.getConfig().set("FormDamages.MY.Level4", 2500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.MY.Level4") == 0.0D) {
+            this.getConfig().set("FormDefences.MY.Level4", 0.25D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.MY.Level5") == 0) {
+            this.getConfig().set("FormCosts.MY.Level5", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.MY.Level5") == 0) {
+            this.getConfig().set("FormDamages.MY.Level5", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.MY.Level5") == 0.0D) {
+            this.getConfig().set("FormDefences.MY.Level5", 0.3D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.MY.Level1") == 0.0D) {
+            this.getConfig().set("FormRegens.MY.Level1", 100000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.MY.Level2") == 0.0D) {
+            this.getConfig().set("FormRegens.MY.Level2", 150000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.MY.Level3") == 0.0D) {
+            this.getConfig().set("FormRegens.MY.Level3", 200000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.MY.Level4") == 0.0D) {
+            this.getConfig().set("FormRegens.MY.Level4", 250000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.MY.Level5") == 0.0D) {
+            this.getConfig().set("FormRegens.MY.Level5", 300000);
             this.saveConfig();
         }
 

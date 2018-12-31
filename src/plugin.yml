@@ -1,14 +1,18 @@
 name: KosmicOpenSRC
 main: me.McShovelYT.KosmicForms.Old.Main
-version: 1.1
+version: 1.2
 author: McShovelYT
 description: A custom forms plugin
 commands:
    kReload:
       description: Reloads the config
+      aliases: kR
    kSetForm:
       description: Sets form level
+      aliases: kSF
    kGiveFormTP:
       description: Sets form tp
+      aliases: kGFTP
    kMenu:
       description: Opens form menu
+      aliases: kM

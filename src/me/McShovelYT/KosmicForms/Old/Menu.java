@@ -44,10 +44,15 @@ public class Menu implements Listener {
         ItemMeta EVOMeta = EVO.getItemMeta();
         EVOMeta.setDisplayName("" + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue Form");
         EVO.setItemMeta(EVOMeta);
+        ItemStack MY = new ItemStack(Material.INK_SACK, 1, (short)6);
+        ItemMeta MYMeta = MY.getItemMeta();
+        MYMeta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + "Mystic Form");
+        MY.setItemMeta(MYMeta);
         ItemStack selectForm = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta selectFormMeta = selectForm.getItemMeta();
         selectFormMeta.setDisplayName(ChatColor.BLUE + "Select Form");
         selectForm.setItemMeta(selectFormMeta);
+        inv.setItem(11, MY);
         inv.setItem(12, god);
         inv.setItem(13, SK);
         inv.setItem(14, UI);
@@ -112,7 +117,7 @@ public class Menu implements Listener {
         SK.setItemMeta(SKMeta);
         
         ItemStack EVO = new ItemStack(Material.INK_SACK, 1, (short)4);
-        ItemMeta EVOMeta = god.getItemMeta();
+        ItemMeta EVOMeta = EVO.getItemMeta();
         EVOMeta.setDisplayName(ChatColor.BLUE + "Mastered SS Blue Form");
         List EVOLore;
         if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".EVOForm.EVOLevel") == null) {
@@ -121,12 +126,29 @@ public class Menu implements Listener {
         } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.EVOLevel")) > 0) {
             EVOLore = Arrays.asList(ChatColor.BLUE + "Purchased, Level: " + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.EVOLevel")));
             EVOMeta.setLore(EVOLore);
-        } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.GodLevel")) == 0) {
+        } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.EVOLevel")) == 0) {
             EVOLore = Arrays.asList("" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Not purchased");
             EVOMeta.setLore(EVOLore);
         }
 
         EVO.setItemMeta(EVOMeta);
+        
+        ItemStack MY = new ItemStack(Material.INK_SACK, 1, (short)6);
+        ItemMeta MYMeta = god.getItemMeta();
+        MYMeta.setDisplayName(ChatColor.BOLD + "Mystic Form");
+        List MYLore;
+        if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".MYForm.MYLevel") == null) {
+            MYLore = Arrays.asList("" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Not purchased");
+            MYMeta.setLore(MYLore);
+        } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")) > 0) {
+            MYLore = Arrays.asList(ChatColor.BLUE + "Purchased, Level: " + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")));
+            MYMeta.setLore(MYLore);
+        } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")) == 0) {
+            MYLore = Arrays.asList("" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Not purchased");
+            MYMeta.setLore(MYLore);
+        }
+
+        MY.setItemMeta(MYMeta);
         
         ItemStack exit = new ItemStack(Material.REDSTONE_BLOCK, 1);
         ItemMeta exitMeta = exit.getItemMeta();
@@ -137,6 +159,7 @@ public class Menu implements Listener {
         deselectMeta.setDisplayName(ChatColor.RED + "Deselect form");
         deselect.setItemMeta(deselectMeta);
         inv.setItem(4, deselect);
+        inv.setItem(11, MY);
         inv.setItem(12, god);
         inv.setItem(13, SK);
         inv.setItem(14, UI);
@@ -179,6 +202,57 @@ public class Menu implements Listener {
             plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.GodTP", "0");
         } else {
             godTPMeta.setDisplayName("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "G.O.D TP: " + ChatColor.RESET + ChatColor.DARK_PURPLE + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.GodTP")));
+        }
+
+        godTP.setItemMeta(godTPMeta);
+        ItemStack exit = new ItemStack(Material.REDSTONE_BLOCK, 1);
+        ItemMeta exitMeta = exit.getItemMeta();
+        exitMeta.setDisplayName(ChatColor.RED + "Exit menu");
+        exit.setItemMeta(exitMeta);
+        inv.setItem(4, godTP);
+        inv.setItem(11, godLvl1);
+        inv.setItem(12, godLvl2);
+        inv.setItem(13, godLvl3);
+        inv.setItem(14, godLvl4);
+        inv.setItem(15, godLvl5);
+        inv.setItem(22, exit);
+        player.openInventory(inv);
+    }
+    
+    public static void openMYMenu(Player player) {
+        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, "" + ChatColor.WHITE + ChatColor.BOLD + "Mystic Form Menu");
+        ItemStack godLvl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
+        ItemMeta godLvl1Meta = godLvl1.getItemMeta();
+        godLvl1Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 1");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.CreateFirst(plugin, player, godLvl1Meta, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level1"), "" + ChatColor.WHITE);
+        godLvl1.setItemMeta(godLvl1Meta);
+        ItemStack godLvl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
+        ItemMeta godLvl2Meta = godLvl2.getItemMeta();
+        godLvl2Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 2");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl2Meta, 2, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level2"), "" + ChatColor.WHITE);
+        godLvl2.setItemMeta(godLvl2Meta);
+        ItemStack godLvl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
+        ItemMeta godLvl3Meta = godLvl3.getItemMeta();
+        godLvl3Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 3");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl3Meta, 3, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level3"), "" + ChatColor.WHITE);
+        godLvl3.setItemMeta(godLvl3Meta);
+        ItemStack godLvl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
+        ItemMeta godLvl4Meta = godLvl4.getItemMeta();
+        godLvl4Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 4");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl4Meta, 4, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level4"), "" + ChatColor.WHITE);
+        godLvl4.setItemMeta(godLvl4Meta);
+        ItemStack godLvl5 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
+        ItemMeta godLvl5Meta = godLvl5.getItemMeta();
+        godLvl5Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 5");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level5"), "" + ChatColor.WHITE);
+        godLvl5.setItemMeta(godLvl5Meta);
+        ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)6);
+        ItemMeta godTPMeta = godTP.getItemMeta();
+        if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP") == null) {
+            godTPMeta.setDisplayName("" + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + 0);
+            plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP", "0");
+        } else {
+            godTPMeta.setDisplayName("" + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP")));
         }
 
         godTP.setItemMeta(godTPMeta);
@@ -328,7 +402,7 @@ public class Menu implements Listener {
         ItemStack godLvl5 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)11);
         ItemMeta godLvl5Meta = godLvl5.getItemMeta();
         godLvl5Meta.setDisplayName("" + ChatColor.BLUE + ChatColor.BOLD + "EVO Form lvl 5");
-        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".EVOForm.GodLevel", plugin.getConfig().getInt("FormCosts.EVO.Level5"), "" + ChatColor.BLUE);
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".EVOForm.EVOLevel", plugin.getConfig().getInt("FormCosts.EVO.Level5"), "" + ChatColor.BLUE);
         godLvl5.setItemMeta(godLvl5Meta);
         ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)4);
         ItemMeta godTPMeta = godTP.getItemMeta();
@@ -360,6 +434,10 @@ public class Menu implements Listener {
         if (e.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "Kosmic custom forms Menu")) {
             player = (Player)e.getWhoClicked();
             e.setCancelled(true);
+            if (e.getSlot() == 11) {
+                openMYMenu(player);
+            }
+            
             if (e.getSlot() == 12) {
                 openGodMenu(player);
             }
@@ -395,6 +473,7 @@ public class Menu implements Listener {
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                         plugin.saveConfig();
                         player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.DARK_PURPLE + "G.O.D form");
                         player.closeInventory();
@@ -415,6 +494,7 @@ public class Menu implements Listener {
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                         plugin.saveConfig();
                         player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I form");
                         player.closeInventory();
@@ -435,8 +515,9 @@ public class Menu implements Listener {
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                         plugin.saveConfig();
-                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.BLUE + "EVO form");
+                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue form");
                         player.closeInventory();
                     }
                 } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.EVOLevel")) == 0) {
@@ -455,11 +536,33 @@ public class Menu implements Listener {
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                         plugin.saveConfig();
                         player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.RED + "S.K form");
                         player.closeInventory();
                     }
                 } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.SKLevel")) == 0) {
+                    player.sendMessage(ChatColor.RED + "You do not have this form");
+                }
+            }
+            
+            if (e.getSlot() == 11) {
+                if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".MYForm.MYLevel") == null) {
+                    player.sendMessage(ChatColor.RED + "You do not have this form");
+                } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")) > 0) {
+                    if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm") == "MY") {
+                        player.sendMessage(ChatColor.RED + "Form already selected");
+                    } else {
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm", "MY");
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
+                        plugin.saveConfig();
+                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.RED + "Mystic form");
+                        player.closeInventory();
+                    }
+                } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")) == 0) {
                     player.sendMessage(ChatColor.RED + "You do not have this form");
                 }
             }
@@ -482,8 +585,11 @@ public class Menu implements Listener {
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.RED + "S.K form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("EVO")) {
-                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.BLUE + "EVO form");
+                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                    } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("MY")) {
+                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.BOLD + "MY form");
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                     }
 
                     plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm", (Object)null);
@@ -598,6 +704,34 @@ public class Menu implements Listener {
 
             if (e.getSlot() == 15) {
                 CreateUpgradeLogic.CreateFirst(player, ".EVOForm.EVOLevel", ".EVOForm.EVOTP", plugin.getConfig().getInt("FormCosts.EVO.Level5"), "" + ChatColor.RESET + ChatColor.BLUE + "EVO Form", "EVO", 5);
+            }
+
+            if (e.getSlot() == 22) {
+                openMenu(player);
+            }
+        }
+        
+        if (e.getInventory().getName().equalsIgnoreCase("" + ChatColor.WHITE + ChatColor.BOLD + "Mystic Form Menu")) {
+            player = (Player)e.getWhoClicked();
+            e.setCancelled(true);
+            if (e.getSlot() == 11) {
+                CreateUpgradeLogic.CreateFirst(player, ".MYForm.MYLevel", ".MYForm.MYTP", plugin.getConfig().getInt("FormCosts.MY.Level1"), "" + ChatColor.RESET + ChatColor.BLUE + "MY Form", "MY", 1);
+            }
+
+            if (e.getSlot() == 12) {
+                CreateUpgradeLogic.CreateFirst(player, ".MYForm.MYLevel", ".MYForm.MYTP", plugin.getConfig().getInt("FormCosts.MY.Level2"), "" + ChatColor.RESET + ChatColor.BLUE + "MY Form", "MY", 2);
+            }
+
+            if (e.getSlot() == 13) {
+                CreateUpgradeLogic.CreateFirst(player, ".MYForm.MYLevel", ".MYForm.MYTP", plugin.getConfig().getInt("FormCosts.MY.Level3"), "" + ChatColor.RESET + ChatColor.BLUE + "MY Form", "MY", 3);
+            }
+
+            if (e.getSlot() == 14) {
+                CreateUpgradeLogic.CreateFirst(player, ".MYForm.MYLevel", ".MYForm.MYTP", plugin.getConfig().getInt("FormCosts.MY.Level4"), "" + ChatColor.RESET + ChatColor.BLUE + "MY Form", "MY", 4);
+            }
+
+            if (e.getSlot() == 15) {
+                CreateUpgradeLogic.CreateFirst(player, ".MYForm.MYLevel", ".MYForm.MYTP", plugin.getConfig().getInt("FormCosts.MY.Level5"), "" + ChatColor.RESET + ChatColor.BLUE + "MY Form", "MY", 5);
             }
 
             if (e.getSlot() == 22) {
