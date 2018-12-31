@@ -4,10 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic;
 import me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeLogic;
+import me.dpohvar.powernbt.api.NBTCompound;
+import me.dpohvar.powernbt.api.NBTManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -576,18 +579,65 @@ public class Menu implements Listener {
                     player.sendMessage(ChatColor.RED + "No form selected");
                 } else {
                     if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("god")) {
+                        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                        PlayerPersisted.put("jrmcState", 0);
+                        Forgadata.put("PlayerPersisted", PlayerPersisted);
+                        NBTManager.getInstance().writeForgeData(player, Forgadata);
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.DARK_PURPLE + "G.O.D form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("ui")) {
+                    	if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".UIForm.UILevel")) < 5) {
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            PlayerPersisted.put("jrmcStatusEff", "");
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                    	} else {
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            PlayerPersisted.put("jrmcStatusEff", "");
+                            int Race = PlayerPersisted.getInt("jrmcRace");
+                            if (Race == 0) {
+                            	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultHairColor"));
+                            }
+                            if (Race == 1) {
+                            	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultHairColor"));
+                            }
+                            if (Race == 2) {
+                            	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultHairColor"));
+                            }
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                    	}
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("SK")) {
+                        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                        PlayerPersisted.put("jrmcState2", "");
+                        Forgadata.put("PlayerPersisted", PlayerPersisted);
+                        NBTManager.getInstance().writeForgeData(player, Forgadata);
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.RED + "S.K form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("EVO")) {
+                    	NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                    	NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                        PlayerPersisted.put("jrmcState", "");
+                        PlayerPersisted.put("jrmcStatusEff", "");
+                        Forgadata.put("PlayerPersisted", PlayerPersisted);
+                        NBTManager.getInstance().writeForgeData(player, Forgadata);
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("MY")) {
+                        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                        PlayerPersisted.put("jrmcStatusEff", "");
+                        PlayerPersisted.put("jrmcRelease", 100);
+                        int var = this.plugin.getConfig().getInt("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultAuraColor");
+                        PlayerPersisted.put("jrmcAuraColor", var);
+                        Forgadata.put("PlayerPersisted", PlayerPersisted);
+                        NBTManager.getInstance().writeForgeData(player, Forgadata);
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.BOLD + "MY form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                     }

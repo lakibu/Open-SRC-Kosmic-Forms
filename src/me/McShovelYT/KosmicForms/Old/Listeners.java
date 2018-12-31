@@ -86,7 +86,6 @@ public class Listeners implements Listener {
                                     NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                                     NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
-                                    
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                 } else {
@@ -203,7 +202,7 @@ public class Listeners implements Listener {
                                 	int Purity = PlayerPersisted.getInt("jrmcAlign");
                                 
                                 	if (Purity >= 51) {
-                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.DARK_BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
                                 	} else {
                                     	e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
                                 	}
