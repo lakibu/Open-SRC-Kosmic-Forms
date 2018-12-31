@@ -86,6 +86,7 @@ public class Listeners implements Listener {
                                     NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                                     NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
+                                    
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                 } else {
@@ -93,6 +94,16 @@ public class Listeners implements Listener {
                                     NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                                     NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
+                                    int Race = PlayerPersisted.getInt("jrmcRace");
+                                    if (Race == 0) {
+                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                    }
+                                    if (Race == 1) {
+                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                    }
+                                    if (Race == 2) {
+                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                    }
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                 }
@@ -114,6 +125,24 @@ public class Listeners implements Listener {
                                     }).runTaskLater(plugin, 2L);
                                 } else {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I Form" + ChatColor.BLUE + "!");
+                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                                    String var1 = PlayerPersisted.getString("jrmcDNS");
+                                    int Race = PlayerPersisted.getInt("jrmcRace");
+                                    if (Race == 0) {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
+                                    PlayerPersisted.put("jrmcDNS", "020000010oa7010016nKR0rgre00000000000000000PCEb0PCEb");
+                                    }
+                                    if (Race == 1) {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
+                                    PlayerPersisted.put("jrmcDNS", "020000010oa7010016nKR0rgre00000000000000000PCEb0PCEb");
+                                    }
+                                    if (Race == 2) {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
+                                    PlayerPersisted.put("jrmcDNS", "020000010oa7010016nKR0rgre00000000000000000PCEb0PCEb");
+                                    }
+                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
+                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
                                     
                                     final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
                                     FireworkMeta meta = fw.getFireworkMeta();
@@ -229,6 +258,8 @@ public class Listeners implements Listener {
                                     NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
                                     PlayerPersisted.put("jrmcRelease", 100);
+                                    int var = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor");
+                                    PlayerPersisted.put("jrmcAuraColor", var);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
@@ -236,8 +267,18 @@ public class Listeners implements Listener {
                                 NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                 int mnd = PlayerPersisted.getInt("jrmcIntI");
                                 
+                                
                                 if (mnd >= 4000) {
+                                	
+                                	int Aura = PlayerPersisted.getInt("jrmcAuraColor");
+                                	
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", true);
+                                	
+                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor", Aura);
+                                	PlayerPersisted.put("jrmcAuraColor", 12189689);
+                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
+                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                                    
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.BOLD + "Mystic Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.MYLevel") + ChatColor.BLUE + "!");
                                     
                                     final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);

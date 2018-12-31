@@ -164,7 +164,7 @@ public class Particles {
                             player2 = var9[var7];
                             NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                             NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-                            PlayerPersisted.put("jrmcStatusEff", "C");
+                            PlayerPersisted.put("jrmcStatusEff", "CB");
                             
                             int mnd = PlayerPersisted.getInt("jrmcIntI");
                             

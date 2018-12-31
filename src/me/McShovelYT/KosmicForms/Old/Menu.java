@@ -559,7 +559,7 @@ public class Menu implements Listener {
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                         plugin.saveConfig();
-                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.RED + "Mystic form");
+                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.WHITE + "Mystic form");
                         player.closeInventory();
                     }
                 } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")) == 0) {
