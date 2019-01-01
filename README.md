@@ -1,9 +1,9 @@
 # Open SRC Kosmic Forms
-Project to make you have custom transformations.
+Project to allow custom transformations :100:
 
-## Getting Started
+### Getting Started
 Please give credit to the rightful owners. So getting started you can clone this repo,
-And then compile it as a jar, in eclipse/intellij with imports of CraftBukkit 1.7.10 and PowerNBT
+And then compile it as a jar, in eclipse/intellij with imports of CraftBukkit 1.7.10 and PowerNBT /play tada
 
 ## Dependencies
 * [CraftBukkit](https://www.google.com/url?q=https://www.dropbox.com/s/y0ok7i7x4hxuay1/craftbukkit-1.7.10-R0.1-20140808.005431-8.jar?dl%3D0&sa=D&source=hangouts&ust=1546290773742000&usg=AFQjCNHEQFE9khnvEqbHy6FWwSruwPFfWg)
@@ -12,4 +12,4 @@ And then compile it as a jar, in eclipse/intellij with imports of CraftBukkit 1.
 ### Authors/Contributors
 **Dbzfan1023** - *Lead Dev* (https://github.com/Dbzfan1023)
 
-**SSuperKing** - *NBT Manager(Helper)* (https://github.com/SSuperKing)
+**SSuperKing** - *Helper* (https://github.com/SSuperKing)
