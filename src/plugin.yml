@@ -1,6 +1,6 @@
 name: KosmicOpenSRC
 main: me.McShovelYT.KosmicForms.Old.Main
-version: 1.3
+version: 1.5
 author: McShovelYT
 description: A custom forms plugin
 commands:
