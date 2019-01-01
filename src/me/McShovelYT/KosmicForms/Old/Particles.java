@@ -132,11 +132,13 @@ public class Particles {
                             }
 
                             if (Race == 2) {
-                                PlayerPersisted.put("jrmcState", 15);
-                                if (Purity >= 51) {
+                                if (Purity > 50) {
                                 	PlayerPersisted.put("jrmcStatusEff", "B");
-                                } else {
+                                	PlayerPersisted.put("jrmcState", 15);
+                                } 
+                                if (Purity <= 50) {
                                 	PlayerPersisted.put("jrmcStatusEff", "VB");
+                                	PlayerPersisted.put("jrmcState", 15);
                                 }
                             }
 
@@ -149,6 +151,7 @@ public class Particles {
                                 PlayerPersisted.put("jrmcState", 6);
                                 PlayerPersisted.put("jrmcStatusEff", "B");
                             }
+                            
                             
                             Forgadata.put("PlayerPersisted", PlayerPersisted);
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
@@ -452,6 +455,6 @@ public class Particles {
                 }
 
             }
-        }).runTaskTimerAsynchronously(plugin, 0L, 100L);
+        }).runTaskTimerAsynchronously(plugin, 0L, 80L);
     }
 }

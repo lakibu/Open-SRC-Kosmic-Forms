@@ -1,15 +1,29 @@
 package me.McShovelYT.KosmicForms.Old;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.McShovelYT.KosmicForms.Old.Methods.Methods;
+
 public class Main extends JavaPlugin implements Listener {
+    static HashMap<UUID, List<String>> inbox;
+	
     public Main() {
     }
 
@@ -24,9 +38,25 @@ public class Main extends JavaPlugin implements Listener {
         Particles.particles();
         Particles.regen();
         this.getLogger().warning("This ain't it chief");
+        inbox = new HashMap<UUID, List<String>>();
     }
 
     public void onDisable() {
+    	this.getLogger().info("This still ain't it chief");
+    	
+        Iterator<UUID> var2 = inbox.keySet().iterator();
+
+        while(var2.hasNext()) {
+            UUID uuid = var2.next();
+            Iterator<String> var4 = inbox.get(uuid).iterator();
+
+            while(var4.hasNext()) {
+                String s = (String)var4.next();
+                this.getConfig().getStringList("PlayerData." + uuid.toString() + ".Inbox").add(s);
+            }
+        }
+
+        this.saveConfig();
     }
 
     public void permissionsShit() {
@@ -37,8 +67,148 @@ public class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().addPermission(GiveFormTPPermission);
         this.getServer().getPluginManager().addPermission(MenuPermission);
     }
+    
+	@SuppressWarnings("deprecation")
+	@EventHandler
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent e) {
+        OfflinePlayer player;
+        int var3;
+        int var4;
+        OfflinePlayer[] var5;
+        if (e.getMessage().toLowerCase().contains("@everyone")) {
+        	if (e.getPlayer().isOp()) {
+            e.setMessage(Methods.lowerCaseString(e.getMessage(), "@everyone").replaceAll("@everyone", "" + ChatColor.BLUE + ChatColor.UNDERLINE + "@everyone" + ChatColor.RESET));
+            var4 = (var5 = this.getServer().getOfflinePlayers()).length;
 
-    @SuppressWarnings("deprecation")
+            for(var3 = 0; var3 < var4; ++var3) {
+                player = var5[var3];
+                if (player.isOnline()) {
+                	if (!player.getPlayer().getName().equals(e.getPlayer().getName())) {
+                		((Player)player).sendMessage("" + ChatColor.BLUE + ChatColor.BOLD + "You are mentioned by " + ChatColor.YELLOW + ChatColor.BOLD + e.getPlayer().getName() + ChatColor.BLUE + ChatColor.BOLD + "!");
+                    	((Player)player).playNote(e.getPlayer().getLocation(), (byte)4, (byte)7);
+                    	((Player)player).playNote(e.getPlayer().getLocation(), (byte)4, (byte)10);
+                	}
+                }
+            }
+        	}
+        }
+
+        if (e.getMessage().toLowerCase().contains("@here")) {
+        	if (e.getPlayer().isOp()) {
+            e.setMessage(Methods.lowerCaseString(e.getMessage(), "@here").replaceAll("@here", "" + ChatColor.BLUE + ChatColor.UNDERLINE + "@here" + ChatColor.RESET));
+            Player[] var7;
+            var4 = (var7 = this.getServer().getOnlinePlayers()).length;
+
+            for(var3 = 0; var3 < var4; ++var3) {
+                Player player1 = var7[var3];
+            	if (!player1.getPlayer().getName().equals(e.getPlayer().getName())) {
+            		player1.sendMessage("" + ChatColor.BLUE + ChatColor.BOLD + "You are mentioned by " + ChatColor.YELLOW + ChatColor.BOLD + e.getPlayer().getName() + ChatColor.BLUE + ChatColor.BOLD + "!");
+                	player1.playNote(e.getPlayer().getLocation(), (byte)4, (byte)7);
+                	player1.playNote(e.getPlayer().getLocation(), (byte)4, (byte)10);
+            	}
+            }
+        	}
+        }
+
+        var4 = (var5 = this.getServer().getOfflinePlayers()).length;
+
+        for(var3 = 0; var3 < var4; ++var3) {
+            player = var5[var3];
+            if (e.getMessage().toLowerCase().contains('@' + player.getName().toLowerCase())) {
+                e.setMessage(Methods.lowerCaseString(e.getMessage(), '@' + player.getName()).replaceAll('@' + player.getName(), "" + ChatColor.BLUE + ChatColor.UNDERLINE + '@' + player.getName() + ChatColor.RESET));
+                if (player.isOnline()) {
+                	if (!player.getPlayer().getName().equals(e.getPlayer().getName())) {
+                		((Player)player).sendMessage("" + ChatColor.BLUE + ChatColor.BOLD + "You are mentioned by " + ChatColor.YELLOW + ChatColor.BOLD + e.getPlayer().getName() + ChatColor.BLUE + ChatColor.BOLD + "!");
+                    	((Player)player).playNote(e.getPlayer().getLocation(), (byte)4, (byte)7);
+                    	((Player)player).playNote(e.getPlayer().getLocation(), (byte)4, (byte)10);
+                	}
+                }
+            }
+        }
+
+    }
+	
+	@EventHandler
+    public void onTabComplete(PlayerChatTabCompleteEvent e) {
+        for(int size = e.getChatMessage().length() - 1; size >= 0 && e.getChatMessage().getBytes()[size] != 32; --size) {
+            if (e.getChatMessage().getBytes()[size] == 64) {
+                OfflinePlayer[] var6;
+                int var5 = (var6 = this.getServer().getOfflinePlayers()).length;
+
+                for(int var4 = 0; var4 < var5; ++var4) {
+                    OfflinePlayer player = var6[var4];
+                    if (e.getPlayer().isOp()) {
+                    	e.getTabCompletions().add("@here");
+                    	e.getTabCompletions().add("@everyone");
+                    }
+                    e.getTabCompletions().add('@' + player.getName());
+                }
+
+                return;
+            }
+        }
+
+    }
+	
+	@SuppressWarnings("deprecation")
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
+		 if (cmd.getName().equalsIgnoreCase("kSetForm")) {
+	        	List<String> list = new ArrayList<String>();
+	            Player[] var9;
+	            Player player;
+				int var8;
+	            var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+	            int var11 = 0;
+	            player = var9[var11];
+	        	if (args.length == 1) {
+	        		for(var11 = 0; var11 < var8; ++var11) {
+	                    	list.add(player.getName());
+	        		}
+	        	}
+	        	
+	        	if (args.length == 2) {
+	        			list.add("god");
+	        			list.add("ui");
+	        			list.add("sk");
+	        			list.add("evo");
+	        			list.add("my");
+	        	}
+	        	
+	        	return list;
+	        } else if (cmd.getName().equalsIgnoreCase("kGiveFormTP")) {
+	        	List<String> list = new ArrayList<String>();
+	            Player[] var9;
+	            Player player;
+				int var8;
+	            var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+	            int var11 = 0;
+	            player = var9[var11];
+	        	if (args.length == 1) {
+	        		list.add("set");
+	        		list.add("add");
+	        	}
+	        	
+	        	if (args.length == 2) {
+	        		for(var11 = 0; var11 < var8; ++var11) {
+	        			list.add(player.getName());
+	        		}
+	        	}
+	        	
+	        	if (args.length == 3) {
+        			list.add("god");
+        			list.add("ui");
+        			list.add("sk");
+        			list.add("evo");
+        			list.add("my");
+	        	}
+	        	
+	        	return list;
+	        } else {
+	        	return null;
+        }
+	}
+    
+
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
         if (cmd.getName().equalsIgnoreCase("kReload")) {
             if (sender.hasPermission("Kosmic.Reload")) {
@@ -50,16 +220,16 @@ public class Main extends JavaPlugin implements Listener {
             }
         }
 
-        int length;
-        Player playerToGiveFormTP;
+        int length = 0;
+        OfflinePlayer playerToGiveFormTP;
         int var7;
         int var8;
-        Player[] var9;
+        OfflinePlayer[] var9;
         if (cmd.getName().equalsIgnoreCase("kSetForm")) {
             if (sender.hasPermission("Kosmic.SetForm")) {
                 length = args.length;
                 if (length == 3) {
-                    var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+                    var8 = (var9 = Bukkit.getServer().getOfflinePlayers()).length;
 
                     for(var7 = 0; var7 < var8; ++var7) {
                         playerToGiveFormTP = var9[var7];
@@ -106,7 +276,7 @@ public class Main extends JavaPlugin implements Listener {
             if (sender.hasPermission("Kosmic.GiveFormTP")) {
                 length = args.length;
                 if (length == 4) {
-                    var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+                    var8 = (var9 = Bukkit.getServer().getOfflinePlayers()).length;
 
                     for(var7 = 0; var7 < var8; ++var7) {
                         playerToGiveFormTP = var9[var7];
@@ -218,13 +388,12 @@ public class Main extends JavaPlugin implements Listener {
 
         if (cmd.getName().equalsIgnoreCase("kMenu")) {
             if (sender.hasPermission("Kosmic.Menu")) {
-                Menu.openMenu((Player)sender);
+                Menu.openMenu((Player) sender);
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
             }
         }
-
-        return false;
+	return false;
     }
 
     void configShit() {

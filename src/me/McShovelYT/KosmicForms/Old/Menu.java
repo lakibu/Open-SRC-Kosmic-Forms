@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic;
 import me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeLogic;
+import me.McShovelYT.KosmicForms.Old.Methods.Methods;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 
@@ -31,6 +32,7 @@ public class Menu implements Listener {
 
     public static void openMenu(Player player) {
         Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, ChatColor.BLUE + "Kosmic custom forms Menu");
+        ItemStack e = Methods.createItemStack(Material.STAINED_GLASS_PANE, 6, "" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "Created by McShovelYT", "");
         ItemStack god = new ItemStack(Material.INK_SACK, 1, (short)5);
         ItemMeta godMeta = god.getItemMeta();
         godMeta.setDisplayName(ChatColor.DARK_PURPLE + "G.O.D Form");
@@ -49,7 +51,7 @@ public class Menu implements Listener {
         EVO.setItemMeta(EVOMeta);
         ItemStack MY = new ItemStack(Material.INK_SACK, 1, (short)6);
         ItemMeta MYMeta = MY.getItemMeta();
-        MYMeta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + "Mystic Form");
+        MYMeta.setDisplayName("" + ChatColor.RESET + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form");
         MY.setItemMeta(MYMeta);
         ItemStack selectForm = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta selectFormMeta = selectForm.getItemMeta();
@@ -61,6 +63,8 @@ public class Menu implements Listener {
         inv.setItem(14, UI);
         inv.setItem(15, EVO);
         inv.setItem(4, selectForm);
+        inv.setItem(26, e);
+        inv.setItem(inv.getSize() - 9, e);
         player.openInventory(inv);
     }
 
@@ -138,7 +142,7 @@ public class Menu implements Listener {
         
         ItemStack MY = new ItemStack(Material.INK_SACK, 1, (short)6);
         ItemMeta MYMeta = god.getItemMeta();
-        MYMeta.setDisplayName(ChatColor.BOLD + "Mystic Form");
+        MYMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form");
         List MYLore;
         if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".MYForm.MYLevel") == null) {
             MYLore = Arrays.asList("" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Not purchased");
@@ -223,39 +227,39 @@ public class Menu implements Listener {
     }
     
     public static void openMYMenu(Player player) {
-        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, "" + ChatColor.WHITE + ChatColor.BOLD + "Mystic Form Menu");
+        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, "" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form Menu");
         ItemStack godLvl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl1Meta = godLvl1.getItemMeta();
-        godLvl1Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 1");
+        godLvl1Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 1");
         me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.CreateFirst(plugin, player, godLvl1Meta, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level1"), "" + ChatColor.WHITE);
         godLvl1.setItemMeta(godLvl1Meta);
         ItemStack godLvl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl2Meta = godLvl2.getItemMeta();
-        godLvl2Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 2");
+        godLvl2Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 2");
         me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl2Meta, 2, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level2"), "" + ChatColor.WHITE);
         godLvl2.setItemMeta(godLvl2Meta);
         ItemStack godLvl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl3Meta = godLvl3.getItemMeta();
-        godLvl3Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 3");
+        godLvl3Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 3");
         me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl3Meta, 3, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level3"), "" + ChatColor.WHITE);
         godLvl3.setItemMeta(godLvl3Meta);
         ItemStack godLvl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl4Meta = godLvl4.getItemMeta();
-        godLvl4Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 4");
+        godLvl4Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 4");
         me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl4Meta, 4, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level4"), "" + ChatColor.WHITE);
         godLvl4.setItemMeta(godLvl4Meta);
         ItemStack godLvl5 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl5Meta = godLvl5.getItemMeta();
-        godLvl5Meta.setDisplayName("" + ChatColor.BOLD + "Mystic Form lvl 5");
+        godLvl5Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 5");
         me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level5"), "" + ChatColor.WHITE);
         godLvl5.setItemMeta(godLvl5Meta);
         ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)6);
         ItemMeta godTPMeta = godTP.getItemMeta();
         if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP") == null) {
-            godTPMeta.setDisplayName("" + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + 0);
+            godTPMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + 0);
             plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP", "0");
         } else {
-            godTPMeta.setDisplayName("" + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP")));
+            godTPMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP")));
         }
 
         godTP.setItemMeta(godTPMeta);
@@ -587,30 +591,32 @@ public class Menu implements Listener {
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.DARK_PURPLE + "G.O.D form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("ui")) {
-                    	if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".UIForm.UILevel")) < 5) {
+                    	if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".UIForm.UILevel")) < 5) {
                             NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                             NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                             PlayerPersisted.put("jrmcStatusEff", "");
                             Forgadata.put("PlayerPersisted", PlayerPersisted);
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
+                            player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I form");
+                            plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
                     	} else {
                             NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                             NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                             PlayerPersisted.put("jrmcStatusEff", "");
                             int Race = PlayerPersisted.getInt("jrmcRace");
                             if (Race == 0) {
-                            	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultHairColor"));
+                            	PlayerPersisted.put("jrmcDNS", plugin.getConfig().get("PlayerData." + player.getUniqueId() + ".DefaultHairColor"));
                             }
                             if (Race == 1) {
-                            	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultHairColor"));
+                            	PlayerPersisted.put("jrmcDNS", plugin.getConfig().get("PlayerData." + player.getUniqueId() + ".DefaultHairColor"));
                             }
                             if (Race == 2) {
-                            	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultHairColor"));
+                            	PlayerPersisted.put("jrmcDNS", plugin.getConfig().get("PlayerData." + player.getUniqueId() + ".DefaultHairColor"));
                             }
                             Forgadata.put("PlayerPersisted", PlayerPersisted);
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
                     	}
-                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I form");
+                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
                     } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("SK")) {
                         NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
@@ -634,7 +640,7 @@ public class Menu implements Listener {
                         NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                         PlayerPersisted.put("jrmcStatusEff", "");
                         PlayerPersisted.put("jrmcRelease", 100);
-                        int var = this.plugin.getConfig().getInt("PlayerData." + ((OfflinePlayer) e).getPlayer().getUniqueId() + ".DefaultAuraColor");
+                        int var = plugin.getConfig().getInt("PlayerData." + player.getUniqueId() + ".DefaultAuraColor");
                         PlayerPersisted.put("jrmcAuraColor", var);
                         Forgadata.put("PlayerPersisted", PlayerPersisted);
                         NBTManager.getInstance().writeForgeData(player, Forgadata);
@@ -761,7 +767,7 @@ public class Menu implements Listener {
             }
         }
         
-        if (e.getInventory().getName().equalsIgnoreCase("" + ChatColor.WHITE + ChatColor.BOLD + "Mystic Form Menu")) {
+        if (e.getInventory().getName().equalsIgnoreCase("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form Menu")) {
             player = (Player)e.getWhoClicked();
             e.setCancelled(true);
             if (e.getSlot() == 11) {

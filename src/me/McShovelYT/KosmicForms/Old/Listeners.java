@@ -1,6 +1,7 @@
 package me.McShovelYT.KosmicForms.Old;
 
 import java.util.HashMap;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -11,6 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.Plugin;
@@ -19,6 +23,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import net.minecraft.server.v1_7_R4.EnumClientCommand;
+import net.minecraft.server.v1_7_R4.PacketPlayInClientCommand;
+
+@SuppressWarnings("deprecation")
 public class Listeners implements Listener {
     Plugin plugin = Main.getPlugin(Main.class);
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -45,17 +54,28 @@ public class Listeners implements Listener {
                 } else {
                     this.clickPlayers.remove(e.getPlayer().getName());
                     this.clickPlayers.put(e.getPlayer().getName(), currTime);
+                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                    int str = PlayerPersisted.getInt("jrmcStrI");
+                    int dex = PlayerPersisted.getInt("jrmcDexI");
+                    int con = PlayerPersisted.getInt("jrmcCnsI");
+                    int wil = PlayerPersisted.getInt("jrmcWilI");
+                    int mnd = PlayerPersisted.getInt("jrmcIntI");
+                    int spi = PlayerPersisted.getInt("jrmcCncI");
+                    int level = (str + dex + con + wil + mnd + spi) / 5;
+                    
                     if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm") != null) {
                         if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("god")) {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                                 e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.DARK_PURPLE + "G.O.D Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.GodLevel") + ChatColor.BLUE + ".");
-                                NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+
                                 PlayerPersisted.put("jrmcState", 0);
                                 Forgadata.put("PlayerPersisted", PlayerPersisted);
                                 NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
+                            	
+                            	if (level >= 20000) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", true);
                                 e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.DARK_PURPLE + "G.O.D Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.GodLevel") + ChatColor.BLUE + "!");
                             	
@@ -72,6 +92,11 @@ public class Listeners implements Listener {
                                 	}
                                 }).runTaskLater(plugin, 2L);
                                 
+                            	} else {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
+                                    player.sendMessage(ChatColor.RED + "Your level must be 20000 or higher to use this form");
+                            	}
+                            	
                                 this.clickPlayers.put(e.getPlayer().getName(), currTime);
                             }
 
@@ -83,15 +108,11 @@ public class Listeners implements Listener {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
                                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.UILevel")) < 5) {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.UILevel") + ChatColor.BLUE + ".");
-                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                 } else {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I Form" + ChatColor.BLUE + ".");
-                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
                                     int Race = PlayerPersisted.getInt("jrmcRace");
                                     if (Race == 0) {
@@ -107,6 +128,9 @@ public class Listeners implements Listener {
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                 }
                             } else {
+                            	
+                            	if (level >= 40000) {
+
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", true);
                                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.UILevel")) < 5) {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.UILevel") + ChatColor.BLUE + "!");
@@ -124,8 +148,6 @@ public class Listeners implements Listener {
                                     }).runTaskLater(plugin, 2L);
                                 } else {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I Form" + ChatColor.BLUE + "!");
-                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     String var1 = PlayerPersisted.getString("jrmcDNS");
                                     int Race = PlayerPersisted.getInt("jrmcRace");
                                     if (Race == 0) {
@@ -155,7 +177,10 @@ public class Listeners implements Listener {
                                     	}
                                     }).runTaskLater(plugin, 2L);
                                 }
-
+                            	} else {
+                                    player.sendMessage(ChatColor.RED + "Your level must be 40000 or higher to use this form");
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
+                            	}
                                 this.clickPlayers.put(e.getPlayer().getName(), currTime);
                             }
 
@@ -166,12 +191,13 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + ".");
-                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcState2", "");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
+                            	
+                            	if (level >= 15000) {
+                            	
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", true);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + "!");
                                     
@@ -186,7 +212,10 @@ public class Listeners implements Listener {
                                     		fw.detonate();
                                     	}
                                     }).runTaskLater(plugin, 2L);
-                                
+                            	} else {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
+                                    player.sendMessage(ChatColor.RED + "Your level must be 15000 or higher to use this form");
+                            	}
 
                                 this.clickPlayers.put(e.getPlayer().getName(), currTime);
                             }
@@ -197,8 +226,6 @@ public class Listeners implements Listener {
                         if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("EVO")) {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled")) {
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
-                                	NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                	NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                 	int Purity = PlayerPersisted.getInt("jrmcAlign");
                                 
                                 	if (Purity >= 51) {
@@ -211,9 +238,9 @@ public class Listeners implements Listener {
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
+                            	
+                            	if (level >= 30000) {
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
-                                	NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                	NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                 	int Purity = PlayerPersisted.getInt("jrmcAlign");
                                 
                                 	if (Purity >= 51) {
@@ -241,7 +268,10 @@ public class Listeners implements Listener {
                                     		fw.detonate();
                                     	}
                                     }).runTaskLater(plugin, 2L);
-                                
+                            	} else {
+                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                                    player.sendMessage(ChatColor.RED + "Your level must be 30000 or higher to use this form");
+                            	}
 
                                 this.clickPlayers.put(e.getPlayer().getName(), currTime);
                             }
@@ -253,28 +283,28 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.BOLD + "Mystic Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.MYLevel") + ChatColor.BLUE + ".");
-                                    NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                    NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                                     PlayerPersisted.put("jrmcStatusEff", "");
                                     PlayerPersisted.put("jrmcRelease", 100);
                                     int var = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor");
+                                    int var1 = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultPurity");
                                     PlayerPersisted.put("jrmcAuraColor", var);
+                                    PlayerPersisted.put("jrmcAlign", var1);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
-                                NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                                NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-                                int mnd = PlayerPersisted.getInt("jrmcIntI");
-                                
-                                
+                                if (level >= 25000) {
                                 if (mnd >= 4000) {
                                 	
                                 	int Aura = PlayerPersisted.getInt("jrmcAuraColor");
                                 	
+                                	int Purity = PlayerPersisted.getInt("jrmcAlign");
+                                	
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", true);
                                 	
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor", Aura);
+                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultPurity", Purity);
                                 	PlayerPersisted.put("jrmcAuraColor", 12189689);
+                                	PlayerPersisted.put("jrmcAlign", 100);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                     
@@ -298,6 +328,10 @@ public class Listeners implements Listener {
                             	player.sendMessage(ChatColor.RED + "You need 4000 or more mind to transform into this form!");
                             	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                             }
+                            } else {
+                            	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
+                                player.sendMessage(ChatColor.RED + "Your level must be 25000 or higher to use this form");
+                            }
                             }
 
                             this.plugin.saveConfig();
@@ -308,9 +342,30 @@ public class Listeners implements Listener {
 
         }
     }
+    
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+    	final Player p = e.getEntity();
+        p.setCanPickupItems(false);
+        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
+        ((CraftPlayer) p).getHandle().playerConnection.a(packet);
+    }
+    
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e) {
+        e.getPlayer().setCanPickupItems(true);
+    }
+    
+    @EventHandler
+    public void onCoolFormat(PlayerChatEvent e) {
+    	Player p = e.getPlayer();
+    	if (p.isOp()) {
+        	String l = e.getMessage();
+        	e.setMessage("" + ChatColor.WHITE + ChatColor.BOLD + l);
+    	}
+    }
 
-    @SuppressWarnings("deprecation")
-	@EventHandler
+    @EventHandler
     public void onPlayerDealDamageEvent(EntityDamageByEntityEvent e) {
         Player damaged;
         if (e.getEntity() instanceof Player) {
