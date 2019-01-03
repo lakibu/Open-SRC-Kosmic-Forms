@@ -192,8 +192,8 @@ public class Listeners implements Listener {
                                 	} else {
                                     	e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
                                 	}
-                                    NBTEditor.Edit(player, 0, "jrmcState");
-                                    NBTEditor.Edit(player, "", "jrmcStatusEff");
+                                    NBTEditor.Edit(player, "jrmcState", 0);
+                                    NBTEditor.Edit(player, "jrmcStatusEff", "");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
@@ -234,8 +234,8 @@ public class Listeners implements Listener {
                                     PlayerPersisted.put("jrmcRelease", 100);
                                     int var = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor");
                                     int var1 = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultPurity");
-                                    NBTEditor.Edit(player, var, "jrmcAuraColor");
-                                    NBTEditor.Edit(player, var1, "jrmcAlign");
+                                    NBTEditor.Edit(player, "jrmcAuraColor", var);
+                                    NBTEditor.Edit(player, "jrmcAlign", var1);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {

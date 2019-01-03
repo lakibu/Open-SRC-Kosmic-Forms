@@ -97,7 +97,7 @@ public class Particles {
 
                         for(var7 = 0; var7 < var8; ++var7) {
                             player2 = var9[var7];
-                            NBTEditor.Edit(player, 8, "jrmcState2");
+                            NBTEditor.Edit(player, "jrmcState2", 8);
                             packet = new PacketPlayOutWorldParticles("", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
                             ((CraftPlayer)player2).getHandle().playerConnection.sendPacket(packet);
                         }

@@ -13,10 +13,10 @@ public class NBTEditor {
     public NBTEditor() {
     }
 	
-	public static void Edit(Player p, Object obj, String NBTValue) {
+	public static void Edit(Player p, String NBTkey, Object NBTvalue) {
         NBTCompound Forgadata = NBTManager.getInstance().readForgeData(p);
         NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-        PlayerPersisted.put(NBTValue, obj);
+        PlayerPersisted.put(NBTkey, NBTvalue);
         Forgadata.put("PlayerPersisted", PlayerPersisted);
         NBTManager.getInstance().writeForgeData(p, Forgadata);
 	}
