@@ -33,7 +33,7 @@ public class Listeners implements Listener {
     public Listeners(Main plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
-
+    
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
     	Player player = e.getPlayer();
@@ -42,7 +42,7 @@ public class Listeners implements Listener {
             if (!this.clickPlayers.containsKey(e.getPlayer().getName())) {
                 this.clickPlayers.put(e.getPlayer().getName(), currTime);
             }
-
+            
             long lastClick = (Long)this.clickPlayers.get(e.getPlayer().getName());
             if (currTime - lastClick >= 1L) {
                 if (currTime - lastClick > 300L) {
@@ -230,28 +230,16 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.BOLD + "Mystic Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.MYLevel") + ChatColor.BLUE + ".");
-                                    PlayerPersisted.put("jrmcStatusEff", "");
-                                    PlayerPersisted.put("jrmcRelease", 100);
-                                    int var = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor");
-                                    int var1 = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultPurity");
-                                    NBTEditor.Edit(player, "jrmcAuraColor", var);
-                                    NBTEditor.Edit(player, "jrmcAlign", var1);
+                                    NBTEditor.Edit(player, "jrmcStatusEff", 0);
+                                    NBTEditor.Edit(player, "jrmcRelease", 0);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
                                 if (level >= 25000) {
                                 if (mnd >= 4000) {
                                 	
-                                	int Aura = PlayerPersisted.getInt("jrmcAuraColor");
-                                	
-                                	int Purity = PlayerPersisted.getInt("jrmcAlign");
-                                	
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", true);
                                 	
-                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor", Aura);
-                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultPurity", Purity);
-                                	PlayerPersisted.put("jrmcAuraColor", 12189689);
-                                	PlayerPersisted.put("jrmcAlign", 100);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                     
@@ -275,7 +263,6 @@ public class Listeners implements Listener {
                     }
                 }
             }
-
         }
     }
     

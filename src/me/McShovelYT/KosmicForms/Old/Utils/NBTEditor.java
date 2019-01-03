@@ -20,5 +20,11 @@ public class NBTEditor {
         Forgadata.put("PlayerPersisted", PlayerPersisted);
         NBTManager.getInstance().writeForgeData(p, Forgadata);
 	}
-
+	
+	public static int GetInt(Player p, String NBTkey) {
+        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(p);
+        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+        int out = PlayerPersisted.getInt(NBTkey);
+		return out;
+	}
 }

@@ -43,7 +43,7 @@ public class Particles {
                             player2 = var9[var7];
                             NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                             NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-                            int Race = PlayerPersisted.getInt("jrmcRace");
+                            int Race = NBTEditor.GetInt(player, "jrmcRace");
                             if (Race == 0) {
                                 PlayerPersisted.put("jrmcState", 3);
                             }
