@@ -2,9 +2,16 @@ package me.McShovelYT.KosmicForms.Old.Methods;
 
 import java.util.Arrays;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import net.minecraft.server.v1_7_R4.ChatSerializer;
+import net.minecraft.server.v1_7_R4.IChatBaseComponent;
+import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
 
 public class Methods {
 
@@ -16,6 +23,14 @@ public class Methods {
         itemStackMeta.setLore(Arrays.asList(lore));
         itemStack.setItemMeta(itemStackMeta);
         return itemStack;
+    }
+    
+    public static void sendActionBar(Player player, String string) {
+        String stringa = string.replace("_", " ");
+        String s = ChatColor.translateAlternateColorCodes('&', stringa);
+        IChatBaseComponent icbc = ChatSerializer.a("{\"text\": \"" + s + "\"}");
+        PacketPlayOutChat bar = new PacketPlayOutChat(icbc);
+        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(bar);
     }
     
     public static String lowerCaseString(String string, String string2) {

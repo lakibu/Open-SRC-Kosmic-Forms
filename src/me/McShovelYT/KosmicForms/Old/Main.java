@@ -1,13 +1,11 @@
 package me.McShovelYT.KosmicForms.Old;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,13 +14,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.McShovelYT.KosmicForms.Old.Methods.Methods;
 
 public class Main extends JavaPlugin implements Listener {
-    static HashMap<UUID, List<String>> inbox;
 	
     public Main() {
     }
@@ -34,38 +36,22 @@ public class Main extends JavaPlugin implements Listener {
         this.permissionsShit();
         new Listeners(this);
         new Menu(this);
-        new Particles(this);
+        new Particles(this); 
         Particles.particles();
         Particles.regen();
         this.getLogger().warning("This ain't it chief");
-        inbox = new HashMap<UUID, List<String>>();
     }
 
     public void onDisable() {
     	this.getLogger().info("This still ain't it chief");
-    	
-        Iterator<UUID> var2 = inbox.keySet().iterator();
-
-        while(var2.hasNext()) {
-            UUID uuid = var2.next();
-            Iterator<String> var4 = inbox.get(uuid).iterator();
-
-            while(var4.hasNext()) {
-                String s = (String)var4.next();
-                this.getConfig().getStringList("PlayerData." + uuid.toString() + ".Inbox").add(s);
-            }
-        }
-
         this.saveConfig();
     }
 
     public void permissionsShit() {
         Permission SetFormPermission = new Permission("Kosmic.SetForm");
         Permission GiveFormTPPermission = new Permission("Kosmic.GiveFormTP");
-        Permission MenuPermission = new Permission("Kosmic.Menu");
         this.getServer().getPluginManager().addPermission(SetFormPermission);
         this.getServer().getPluginManager().addPermission(GiveFormTPPermission);
-        this.getServer().getPluginManager().addPermission(MenuPermission);
     }
     
 	@SuppressWarnings("deprecation")
@@ -149,6 +135,40 @@ public class Main extends JavaPlugin implements Listener {
         }
 
     }
+	
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e) {
+		Player player = e.getPlayer();
+		
+		PlayerInventory inv = player.getInventory();
+		ItemStack a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
+		
+		if (inv.contains(a, 1)) {
+			
+		} else {
+			inv.addItem(a);
+		}
+	}
+	
+	@EventHandler
+	public void openMenu(PlayerInteractEvent e) {
+		ItemStack a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
+		
+		if (e.getPlayer().getItemInHand().equals(a)) {
+			Menu.openMenu(e.getPlayer());
+		}
+	}
+	
+	
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent e) {
+		ItemStack a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
+
+		if (e.getItemDrop().getItemStack().equals(a)) {
+			e.setCancelled(true);
+			Methods.sendActionBar(e.getPlayer(), ChatColor.RED + "You can't drop this item");
+		}
+	}
 	
 	@SuppressWarnings("deprecation")
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
@@ -387,11 +407,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (cmd.getName().equalsIgnoreCase("kMenu")) {
-            if (sender.hasPermission("Kosmic.Menu")) {
                 Menu.openMenu((Player) sender);
-            } else {
-                sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
-            }
         }
 	return false;
     }

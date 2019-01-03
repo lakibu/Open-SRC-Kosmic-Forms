@@ -3,11 +3,12 @@ package me.McShovelYT.KosmicForms.Old.Methods;
 import java.util.Arrays;
 import java.util.List;
 
-import me.McShovelYT.KosmicForms.Old.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+
+import me.McShovelYT.KosmicForms.Old.Main;
 
 public class CreateUpgradeItemLogic {
     static Plugin plugin = Main.getPlugin(Main.class);

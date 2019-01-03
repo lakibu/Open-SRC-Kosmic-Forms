@@ -26,7 +26,7 @@ public class Menu implements Listener {
     }
 
     public static void openMenu(Player player) {
-        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, ChatColor.BLUE + "Kosmic custom forms Menu");
+        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, ChatColor.BLUE + "Kosmic Forms Menu");
         ItemStack e = Methods.createItemStack(Material.STAINED_GLASS_PANE, 6, "" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "Created by McShovelYT", "");
         ItemStack god = Methods.createItemStack(Material.INK_SACK, 5, ChatColor.DARK_PURPLE + "G.O.D Form", "");
         ItemStack UI = Methods.createItemStack(Material.INK_SACK, 15, "" + ChatColor.WHITE + ChatColor.BOLD + "U.I Form", "");
@@ -71,6 +71,8 @@ public class Menu implements Listener {
         inv.setItem(4, selectForm);
         inv.setItem(26, e);
         inv.setItem(inv.getSize() - 9, e);
+        inv.setItem(0, e);
+        inv.setItem(8, e);
         player.openInventory(inv);
     }
 
@@ -199,6 +201,8 @@ public class Menu implements Listener {
         inv.setItem(22, exit);
         inv.setItem(26, e);
         inv.setItem(inv.getSize() - 9, e);
+        inv.setItem(0, e);
+        inv.setItem(8, e);
         player.openInventory(inv);
     }
 
@@ -258,27 +262,27 @@ public class Menu implements Listener {
         ItemStack godLvl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl1Meta = godLvl1.getItemMeta();
         godLvl1Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 1");
-        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.CreateFirst(plugin, player, godLvl1Meta, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level1"), "" + ChatColor.WHITE);
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.CreateFirst(plugin, player, godLvl1Meta, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level1"), "" + ChatColor.AQUA);
         godLvl1.setItemMeta(godLvl1Meta);
         ItemStack godLvl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl2Meta = godLvl2.getItemMeta();
         godLvl2Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 2");
-        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl2Meta, 2, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level2"), "" + ChatColor.WHITE);
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl2Meta, 2, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level2"), "" + ChatColor.AQUA);
         godLvl2.setItemMeta(godLvl2Meta);
         ItemStack godLvl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl3Meta = godLvl3.getItemMeta();
         godLvl3Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 3");
-        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl3Meta, 3, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level3"), "" + ChatColor.WHITE);
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl3Meta, 3, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level3"), "" + ChatColor.AQUA);
         godLvl3.setItemMeta(godLvl3Meta);
         ItemStack godLvl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl4Meta = godLvl4.getItemMeta();
         godLvl4Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 4");
-        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl4Meta, 4, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level4"), "" + ChatColor.WHITE);
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl4Meta, 4, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level4"), "" + ChatColor.AQUA);
         godLvl4.setItemMeta(godLvl4Meta);
         ItemStack godLvl5 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)3);
         ItemMeta godLvl5Meta = godLvl5.getItemMeta();
         godLvl5Meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form lvl 5");
-        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level5"), "" + ChatColor.WHITE);
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".MYForm.MYLevel", plugin.getConfig().getInt("FormCosts.MY.Level5"), "" + ChatColor.AQUA);
         godLvl5.setItemMeta(godLvl5Meta);
         ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)6);
         ItemMeta godTPMeta = godTP.getItemMeta();
@@ -521,7 +525,7 @@ public class Menu implements Listener {
     @EventHandler
     public void onInventoryCLick(InventoryClickEvent e) {
         Player player;
-        if (e.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "Kosmic custom forms Menu")) {
+        if (e.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "Kosmic Forms Menu")) {
             player = (Player)e.getWhoClicked();
             e.setCancelled(true);
             if (e.getSlot() == 11) {

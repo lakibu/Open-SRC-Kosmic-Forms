@@ -4,10 +4,9 @@ import java.util.HashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.FireworkEffect.Type;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,14 +15,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import me.McShovelYT.KosmicForms.Old.Utils.Fireworks;
+import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
-
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import net.minecraft.server.v1_7_R4.EnumClientCommand;
 import net.minecraft.server.v1_7_R4.PacketPlayInClientCommand;
 
@@ -64,6 +61,8 @@ public class Listeners implements Listener {
                     int spi = PlayerPersisted.getInt("jrmcCncI");
                     int level = (str + dex + con + wil + mnd + spi) / 5;
                     
+                    Location loc = player.getLocation();
+                    
                     if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm") != null) {
                         if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("god")) {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled")) {
@@ -79,18 +78,7 @@ public class Listeners implements Listener {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", true);
                                 e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.DARK_PURPLE + "G.O.D Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.GodLevel") + ChatColor.BLUE + "!");
                             	
-                                final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
-                                FireworkMeta meta = fw.getFireworkMeta();
-                                meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.PURPLE).withFade(Color.fromRGB(205, 132, 255)).with(Type.BALL_LARGE).build());
-                                meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.fromRGB(206, 140, 216)).withFade(Color.PURPLE).with(Type.BURST).build());
-                                meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.fromRGB(108, 0, 181)).withFade(Color.PURPLE).with(Type.BALL).build());
-                                meta.setPower(0);
-                                fw.setFireworkMeta(meta);
-                                (new BukkitRunnable() {
-                                	public void run() {
-                                		fw.detonate();
-                                	}
-                                }).runTaskLater(plugin, 2L);
+                                Fireworks.explosion(player.getLocation(), Color.PURPLE, Color.FUCHSIA);
                                 
                             	} else {
                                     this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
@@ -135,17 +123,8 @@ public class Listeners implements Listener {
                                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.UILevel")) < 5) {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "U.I Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".UIForm.UILevel") + ChatColor.BLUE + "!");
                                     
-                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
-                                    FireworkMeta meta = fw.getFireworkMeta();
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.AQUA).withFade(Color.BLUE).with(Type.BALL_LARGE).build());
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.BLUE).withFade(Color.AQUA).with(Type.BURST).build());
-                                    meta.setPower(0);
-                                    fw.setFireworkMeta(meta);
-                                    (new BukkitRunnable() {
-                                    	public void run() {
-                                    		fw.detonate();
-                                    	}
-                                    }).runTaskLater(plugin, 2L);
+                                    Fireworks.explosion(player.getLocation(), Color.AQUA, Color.BLUE);
+                                    
                                 } else {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I Form" + ChatColor.BLUE + "!");
                                     String var1 = PlayerPersisted.getString("jrmcDNS");
@@ -165,17 +144,8 @@ public class Listeners implements Listener {
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                     
-                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
-                                    FireworkMeta meta = fw.getFireworkMeta();
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.WHITE).withFade(Color.SILVER).with(Type.BALL_LARGE).build());
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.SILVER).withFade(Color.WHITE).with(Type.BURST).build());
-                                    meta.setPower(0);
-                                    fw.setFireworkMeta(meta);
-                                    (new BukkitRunnable() {
-                                    	public void run() {
-                                    		fw.detonate();
-                                    	}
-                                    }).runTaskLater(plugin, 2L);
+                                    Fireworks.explosion(player.getLocation(), Color.WHITE, Color.SILVER);
+                                    
                                 }
                             	} else {
                                     player.sendMessage(ChatColor.RED + "Your level must be 40000 or higher to use this form");
@@ -191,9 +161,7 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + ".");
-                                    PlayerPersisted.put("jrmcState2", "");
-                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                                    NBTEditor.Edit(player, "", "jrmcState2");
                             } else {
                             	
                             	if (level >= 15000) {
@@ -201,17 +169,8 @@ public class Listeners implements Listener {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", true);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + "!");
                                     
-                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
-                                    FireworkMeta meta = fw.getFireworkMeta();
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.fromRGB(80, 0, 0)).withFade(Color.RED).with(Type.BALL_LARGE).build());
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.RED).withFade(Color.fromRGB(80, 0, 0)).with(Type.BURST).build());
-                                    meta.setPower(0);
-                                    fw.setFireworkMeta(meta);
-                                    (new BukkitRunnable() {
-                                    	public void run() {
-                                    		fw.detonate();
-                                    	}
-                                    }).runTaskLater(plugin, 2L);
+                                    Fireworks.explosion(loc, Color.RED, Color.fromRGB(80, 0, 0));
+                                    
                             	} else {
                                     this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                                     player.sendMessage(ChatColor.RED + "Your level must be 15000 or higher to use this form");
@@ -233,8 +192,8 @@ public class Listeners implements Listener {
                                 	} else {
                                     	e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
                                 	}
-                                    PlayerPersisted.put("jrmcState", "");
-                                    PlayerPersisted.put("jrmcStatusEff", "");
+                                    NBTEditor.Edit(player, 0, "jrmcState");
+                                    NBTEditor.Edit(player, "", "jrmcStatusEff");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
@@ -242,32 +201,20 @@ public class Listeners implements Listener {
                             	if (level >= 30000) {
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
                                 	int Purity = PlayerPersisted.getInt("jrmcAlign");
-                                
+                                	Color color = Color.WHITE;
+                                	Color color2 = Color.WHITE;
+                                	
                                 	if (Purity >= 51) {
                                     	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                    	color = Color.BLUE;
+                                    	color2 = Color.AQUA;
                                 	} else {
                                     	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+                                    	color = Color.PURPLE;
+                                    	color2 = Color.FUCHSIA;
                                 	}
                                     
-                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
-                                    FireworkMeta meta = fw.getFireworkMeta();
-                                    
-
-                                    
-                                    if (Purity >= 51) {
-                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.AQUA).withFade(Color.BLUE).with(Type.BALL_LARGE).build());
-                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.BLUE).withFade(Color.AQUA).with(Type.BURST).build());
-                                    } else {
-                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.PURPLE).withFade(Color.FUCHSIA).with(Type.BALL_LARGE).build());
-                                        meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.FUCHSIA).withFade(Color.PURPLE).with(Type.BURST).build());
-                                    }
-                                    meta.setPower(0);
-                                    fw.setFireworkMeta(meta);
-                                    (new BukkitRunnable() {
-                                    	public void run() {
-                                    		fw.detonate();
-                                    	}
-                                    }).runTaskLater(plugin, 2L);
+                                	Fireworks.explosion(loc, color, color2);
                             	} else {
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
                                     player.sendMessage(ChatColor.RED + "Your level must be 30000 or higher to use this form");
@@ -287,8 +234,8 @@ public class Listeners implements Listener {
                                     PlayerPersisted.put("jrmcRelease", 100);
                                     int var = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultAuraColor");
                                     int var1 = this.plugin.getConfig().getInt("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultPurity");
-                                    PlayerPersisted.put("jrmcAuraColor", var);
-                                    PlayerPersisted.put("jrmcAlign", var1);
+                                    NBTEditor.Edit(player, var, "jrmcAuraColor");
+                                    NBTEditor.Edit(player, var1, "jrmcAlign");
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
@@ -310,19 +257,8 @@ public class Listeners implements Listener {
                                     
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.BOLD + "Mystic Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.MYLevel") + ChatColor.BLUE + "!");
                                     
-                                    final Firework fw = (Firework) player.getWorld().spawn(player.getLocation(), Firework.class);
-                                    FireworkMeta meta = fw.getFireworkMeta();
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.BLUE).withFade(Color.AQUA).with(Type.BALL_LARGE).build());
-                                    meta.addEffect(FireworkEffect.builder().trail(false).flicker(false).withColor(Color.AQUA).withFade(Color.WHITE).with(Type.BURST).build());
-                                    meta.setPower(0);
-                                    fw.setFireworkMeta(meta);
-                                    (new BukkitRunnable() {
-                                    	public void run() {
-                                    		fw.detonate();
-                                    	}
-                                    }).runTaskLater(plugin, 2L);
+                                    Fireworks.explosion(loc, Color.AQUA, Color.BLUE);
                                 
-
                                 this.clickPlayers.put(e.getPlayer().getName(), currTime);
                             } else {
                             	player.sendMessage(ChatColor.RED + "You need 4000 or more mind to transform into this form!");
@@ -356,7 +292,8 @@ public class Listeners implements Listener {
         e.getPlayer().setCanPickupItems(true);
     }
     
-    @EventHandler
+    
+	@EventHandler
     public void onCoolFormat(PlayerChatEvent e) {
     	Player p = e.getPlayer();
     	if (p.isOp()) {
@@ -372,6 +309,7 @@ public class Listeners implements Listener {
             damaged = (Player)e.getEntity();
             double x2;
             int x;
+            
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".GodForm.isGodEnabled")) {
                 if (!damaged.isOp()) {
                     if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".GodForm.GodLevel")) == 1) {

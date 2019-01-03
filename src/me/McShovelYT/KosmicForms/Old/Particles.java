@@ -1,6 +1,5 @@
 package me.McShovelYT.KosmicForms.Old;
 
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
@@ -8,8 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
+import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 
 public class Particles {
     static Plugin plugin = Main.getPlugin(Main.class);
@@ -19,7 +20,8 @@ public class Particles {
 
     public static void particles() {
         (new BukkitRunnable() {
-            @SuppressWarnings("deprecation")
+
+			@SuppressWarnings("deprecation")
 			public void run() {
                 Player[] var4;
                 int var3 = (var4 = Bukkit.getServer().getOnlinePlayers()).length;
@@ -95,11 +97,7 @@ public class Particles {
 
                         for(var7 = 0; var7 < var8; ++var7) {
                             player2 = var9[var7];
-                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-                            PlayerPersisted.put("jrmcState2", 8);
-                            Forgadata.put("PlayerPersisted", PlayerPersisted);
-                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                            NBTEditor.Edit(player, 8, "jrmcState2");
                             packet = new PacketPlayOutWorldParticles("", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
                             ((CraftPlayer)player2).getHandle().playerConnection.sendPacket(packet);
                         }
