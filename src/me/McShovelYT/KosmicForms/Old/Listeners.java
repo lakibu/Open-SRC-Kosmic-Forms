@@ -161,7 +161,7 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + ".");
-                                    NBTEditor.Edit(player, "", "jrmcState2");
+                                    NBTEditor.Edit(player, "jrmcState2", "");
                             } else {
                             	
                             	if (level >= 15000) {
@@ -231,7 +231,7 @@ public class Listeners implements Listener {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.BOLD + "Mystic Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.MYLevel") + ChatColor.BLUE + ".");
                                     NBTEditor.Edit(player, "jrmcStatusEff", 0);
-                                    NBTEditor.Edit(player, "jrmcRelease", 0);
+                                    NBTEditor.Edit(player, "jrmcRelease", 100);
                                     Forgadata.put("PlayerPersisted", PlayerPersisted);
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
