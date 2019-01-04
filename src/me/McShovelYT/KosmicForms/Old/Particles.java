@@ -450,6 +450,58 @@ public class Particles {
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
                         }
                     }
+                    
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".RAGEForm.isRAGEEnabled")) {
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel")) == 1) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.RAGE.Level1");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel")) == 2) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.RAGE.Level2");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel")) == 3) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.RAGE.Level3");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel")) == 4) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.RAGE.Level4");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+
+                        if (Integer.parseInt(Particles.plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel")) >= 5) {
+                            x = Particles.plugin.getConfig().getInt("FormRegens.RAGE.Level5");
+                            NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                            NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                            int bdy = PlayerPersisted.getInt("jrmcBdy");
+                            PlayerPersisted.put("jrmcBdy", bdy + x);
+                            Forgadata.put("PlayerPersisted", PlayerPersisted);
+                            NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        }
+                    }
                 }
 
             }

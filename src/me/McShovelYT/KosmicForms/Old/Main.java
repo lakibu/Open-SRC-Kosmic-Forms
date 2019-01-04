@@ -455,7 +455,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.GOD.Level1") == 0) {
-            this.getConfig().set("FormDamages.GOD.Level1", 1000000);
+            this.getConfig().set("FormDamages.GOD.Level1", 10.0D);
             this.saveConfig();
         }
 
@@ -470,7 +470,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.GOD.Level2") == 0) {
-            this.getConfig().set("FormDamages.GOD.Level2", 1500000);
+            this.getConfig().set("FormDamages.GOD.Level2", 15.0D);
             this.saveConfig();
         }
 
@@ -485,7 +485,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.GOD.Level3") == 0) {
-            this.getConfig().set("FormDamages.GOD.Level3", 2000000);
+            this.getConfig().set("FormDamages.GOD.Level3", 20.0D);
             this.saveConfig();
         }
 
@@ -500,7 +500,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.GOD.Level4") == 0) {
-            this.getConfig().set("FormDamages.GOD.Level4", 2500000);
+            this.getConfig().set("FormDamages.GOD.Level4", 25.0D);
             this.saveConfig();
         }
 
@@ -515,7 +515,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.GOD.Level5") == 0) {
-            this.getConfig().set("FormDamages.GOD.Level5", 3000000);
+            this.getConfig().set("FormDamages.GOD.Level5", 30.0D);
             this.saveConfig();
         }
 
@@ -555,7 +555,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.UI.Level1") == 0) {
-            this.getConfig().set("FormDamages.UI.Level1", 2000000);
+            this.getConfig().set("FormDamages.UI.Level1", 20.0D);
             this.saveConfig();
         }
 
@@ -570,7 +570,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.UI.Level2") == 0) {
-            this.getConfig().set("FormDamages.UI.Level2", 3000000);
+            this.getConfig().set("FormDamages.UI.Level2", 30.0D);
             this.saveConfig();
         }
 
@@ -585,7 +585,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.UI.Level3") == 0) {
-            this.getConfig().set("FormDamages.UI.Level3", 4000000);
+            this.getConfig().set("FormDamages.UI.Level3", 40.0D);
             this.saveConfig();
         }
 
@@ -600,7 +600,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.UI.Level4") == 0) {
-            this.getConfig().set("FormDamages.UI.Level4", 5000000);
+            this.getConfig().set("FormDamages.UI.Level4", 50.0D);
             this.saveConfig();
         }
 
@@ -615,7 +615,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.UI.Level5") == 0) {
-            this.getConfig().set("FormDamages.UI.Level5", 6000000);
+            this.getConfig().set("FormDamages.UI.Level5", 60.0D);
             this.saveConfig();
         }
 
@@ -655,7 +655,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.SK.Level1") == 0) {
-            this.getConfig().set("FormDamages.SK.Level1", 1000000);
+            this.getConfig().set("FormDamages.SK.Level1", 10.0D);
             this.saveConfig();
         }
 
@@ -665,7 +665,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormCosts.SK.Level2") == 0) {
-            this.getConfig().set("FormCosts.SK.Level2", 2000000);
+            this.getConfig().set("FormCosts.SK.Level2", 20.0D);
             this.saveConfig();
         }
 
@@ -685,7 +685,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.SK.Level3") == 0) {
-            this.getConfig().set("FormDamages.SK.Level3", 3000000);
+            this.getConfig().set("FormDamages.SK.Level3", 30.0D);
             this.saveConfig();
         }
 
@@ -700,7 +700,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.SK.Level4") == 0) {
-            this.getConfig().set("FormDamages.SK.Level4", 5000000);
+            this.getConfig().set("FormDamages.SK.Level4", 50.0D);
             this.saveConfig();
         }
 
@@ -715,7 +715,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.SK.Level5") == 0) {
-            this.getConfig().set("FormDamages.SK.Level5", 6000000);
+            this.getConfig().set("FormDamages.SK.Level5", 60.0D);
             this.saveConfig();
         }
 
@@ -755,7 +755,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.EVO.Level1") == 0) {
-            this.getConfig().set("FormDamages.EVO.Level1", 1000000);
+            this.getConfig().set("FormDamages.EVO.Level1", 15.D);
             this.saveConfig();
         }
 
@@ -770,7 +770,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.EVO.Level2") == 0) {
-            this.getConfig().set("FormDamages.EVO.Level2", 1500000);
+            this.getConfig().set("FormDamages.EVO.Level2", 20.0D);
             this.saveConfig();
         }
 
@@ -785,7 +785,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.EVO.Level3") == 0) {
-            this.getConfig().set("FormDamages.EVO.Level3", 2000000);
+            this.getConfig().set("FormDamages.EVO.Level3", 25.0D);
             this.saveConfig();
         }
 
@@ -800,7 +800,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.EVO.Level4") == 0) {
-            this.getConfig().set("FormDamages.EVO.Level4", 2500000);
+            this.getConfig().set("FormDamages.EVO.Level4", 30.0D);
             this.saveConfig();
         }
 
@@ -815,7 +815,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.EVO.Level5") == 0) {
-            this.getConfig().set("FormDamages.EVO.Level5", 3000000);
+            this.getConfig().set("FormDamages.EVO.Level5", 35.0D);
             this.saveConfig();
         }
 
@@ -855,7 +855,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.MY.Level1") == 0) {
-            this.getConfig().set("FormDamages.MY.Level1", 1000000);
+            this.getConfig().set("FormDamages.MY.Level1", 11.0D);
             this.saveConfig();
         }
 
@@ -870,7 +870,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.MY.Level2") == 0) {
-            this.getConfig().set("FormDamages.MY.Level2", 1500000);
+            this.getConfig().set("FormDamages.MY.Level2", 16.0D);
             this.saveConfig();
         }
 
@@ -885,7 +885,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.MY.Level3") == 0) {
-            this.getConfig().set("FormDamages.MY.Level3", 2000000);
+            this.getConfig().set("FormDamages.MY.Level3", 21.0D);
             this.saveConfig();
         }
 
@@ -900,7 +900,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.MY.Level4") == 0) {
-            this.getConfig().set("FormDamages.MY.Level4", 2500000);
+            this.getConfig().set("FormDamages.MY.Level4", 26.0D);
             this.saveConfig();
         }
 
@@ -915,7 +915,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormDamages.MY.Level5") == 0) {
-            this.getConfig().set("FormDamages.MY.Level5", 3000000);
+            this.getConfig().set("FormDamages.MY.Level5", 31.0D);
             this.saveConfig();
         }
 

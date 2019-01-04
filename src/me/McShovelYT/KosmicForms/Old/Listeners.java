@@ -670,112 +670,117 @@ public class Listeners implements Listener {
         if (e.getDamager() instanceof Player) {
             damaged = (Player)e.getDamager();
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".GodForm.isGodEnabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".GodForm.GodLevel")) == 1) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.GOD.Level1"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.GOD.Level1") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".GodForm.GodLevel")) == 2) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.GOD.Level2"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.GOD.Level2") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".GodForm.GodLevel")) == 3) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.GOD.Level3"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.GOD.Level3") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".GodForm.GodLevel")) == 4) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.GOD.Level4"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.GOD.Level4") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".GodForm.GodLevel")) >= 5) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.GOD.Level5"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.GOD.Level5") - 1.0D));
                 }
             }
 
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".UIForm.isUIEnabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".UIForm.UILevel")) == 1) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.UI.Level1"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.UI.Level1") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".UIForm.UILevel")) == 2) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.UI.Level2"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.UI.Level2") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".UIForm.UILevel")) == 3) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.UI.Level3"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.UI.Level3") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".UIForm.UILevel")) == 4) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.UI.Level4"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.UI.Level4") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".UIForm.UILevel")) >= 5) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.UI.Level5"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.UI.Level5") - 1.0D));
                 }
             }
             
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".SKForm.isSKEnabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 1) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level1"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SK.Level1") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 2) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level2"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SK.Level2") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 3) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level3"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SK.Level3") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 4) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level4"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SK.Level4") - 1.0D));
                 }
 
-                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) == 5) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.SK.Level5"));
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SKForm.SKLevel")) >= 5) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SK.Level5") - 1.0D));
                 }
             }
             
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".EVOForm.isEVOEnabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 1) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level1"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.EVO.Level1") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 2) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level2"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.EVO.Level2") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 3) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level3"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.EVO.Level3") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) == 4) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level4"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.EVO.Level4") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".EVOForm.EVOLevel")) >= 5) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.EVO.Level5"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.EVO.Level5") - 1.0D));
                 }
             }
             
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".MYForm.isMYEnabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) == 1) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.MY.Level1"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.MY.Level1") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) == 2) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.MY.Level2"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.MY.Level2") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) == 3) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.MY.Level3"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.MY.Level3") - 1.0D));
                 }
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) == 4) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.MY.Level4"));
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.MY.Level4") - 1.0D));
                 }
 
-                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) == 5) {
-                    ((Damageable)e.getEntity()).damage(this.plugin.getConfig().getInt("FormDamages.MY.Level5"));
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) >= 5) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.MY.Level5") - 1.0D));
                 }
             }
         }
