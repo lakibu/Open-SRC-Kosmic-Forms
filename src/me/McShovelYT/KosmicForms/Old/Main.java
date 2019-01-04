@@ -665,12 +665,12 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getInt("FormCosts.SK.Level2") == 0) {
-            this.getConfig().set("FormCosts.SK.Level2", 20.0D);
+            this.getConfig().set("FormCosts.SK.Level2", 2000000);
             this.saveConfig();
         }
 
         if (this.getConfig().getInt("FormDamages.SK.Level2") == 0) {
-            this.getConfig().set("FormDamages.SK.Level2", 2000000);
+            this.getConfig().set("FormDamages.SK.Level2", 20.0D);
             this.saveConfig();
         }
 
