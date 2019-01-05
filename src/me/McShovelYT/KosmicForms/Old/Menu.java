@@ -59,20 +59,26 @@ public class Menu implements Listener {
         
         ItemStack EVO = Methods.createItemStack(Material.INK_SACK, help3, help4, "");
         ItemStack MY = Methods.createItemStack(Material.INK_SACK, 6, "" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form" , "");
+        ItemStack RAGE = Methods.createItemStack(Material.INK_SACK, 11, "" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form" , "");
+        ItemStack SSJ5 = Methods.createItemStack(Material.INK_SACK, 7, "" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form" , "");
+        ItemStack exit = Methods.createItemStack(Material.REDSTONE_BLOCK, 0, "" + ChatColor.DARK_RED + ChatColor.BOLD + "Exit Menu", "");
         ItemStack selectForm = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta selectFormMeta = selectForm.getItemMeta();
         selectFormMeta.setDisplayName(ChatColor.BLUE + "Select Form");
         selectForm.setItemMeta(selectFormMeta);
+        inv.setItem(10, SSJ5);
         inv.setItem(11, MY);
         inv.setItem(12, god);
         inv.setItem(13, SK);
         inv.setItem(14, UI);
         inv.setItem(15, EVO);
+        inv.setItem(16, RAGE);
         inv.setItem(4, selectForm);
         inv.setItem(26, e);
         inv.setItem(inv.getSize() - 9, e);
         inv.setItem(0, e);
         inv.setItem(8, e);
+		inv.setItem(22, exit);
         player.openInventory(inv);
     }
 
@@ -182,6 +188,34 @@ public class Menu implements Listener {
         }
         
     	ItemStack MY = Methods.createItemStack(Material.INK_SACK, 6, "" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form", help1);
+    	
+        if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel") == null || Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel")) == 0) {
+        	help = 0;
+        } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel")) > 0) {
+        	help = 1;
+        }
+        
+        if (help == 1) {
+        	help1 = ChatColor.GOLD + "Purchased, Level: " + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel"));
+        } else {
+        	help1 = "" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Not purchased";
+        }
+        
+    	ItemStack RAGE = Methods.createItemStack(Material.INK_SACK, 11, ChatColor.GOLD + "Rage Form", help1);
+    	
+        if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SS5Form.SS5Level") == null || Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5Level")) == 0) {
+        	help = 0;
+        } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5Level")) > 0) {
+        	help = 1;
+        }
+        
+        if (help == 1) {
+        	help1 = ChatColor.GRAY + "Purchased, Level: " + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5Level"));
+        } else {
+        	help1 = "" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Not purchased";
+        }
+        
+    	ItemStack SSJ5 = Methods.createItemStack(Material.INK_SACK, 7, ChatColor.GRAY + "SSJ 5 Form", help1);
 
         
         ItemStack exit = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -193,11 +227,13 @@ public class Menu implements Listener {
         deselectMeta.setDisplayName(ChatColor.RED + "Deselect form");
         deselect.setItemMeta(deselectMeta);
         inv.setItem(4, deselect);
+        inv.setItem(10, SSJ5);
         inv.setItem(11, MY);
         inv.setItem(12, god);
         inv.setItem(13, SK);
         inv.setItem(14, UI);
         inv.setItem(15, EVO);
+        inv.setItem(16, RAGE);
         inv.setItem(22, exit);
         inv.setItem(26, e);
         inv.setItem(inv.getSize() - 9, e);
@@ -287,10 +323,10 @@ public class Menu implements Listener {
         ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)6);
         ItemMeta godTPMeta = godTP.getItemMeta();
         if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP") == null) {
-            godTPMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + 0);
+            godTPMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.AQUA + ChatColor.BOLD + 0);
             plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP", "0");
         } else {
-            godTPMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.BOLD + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP")));
+            godTPMeta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Mystic TP: " + ChatColor.RESET + ChatColor.AQUA + ChatColor.BOLD + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYTP")));
         }
 
         godTP.setItemMeta(godTPMeta);
@@ -521,6 +557,108 @@ public class Menu implements Listener {
         inv.setItem(22, exit);
         player.openInventory(inv);
     }
+    
+    public static void openRAGEMenu(Player player) {
+        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, ChatColor.GOLD + "Rage Form Menu");
+        ItemStack godLvl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)4);
+        ItemMeta godLvl1Meta = godLvl1.getItemMeta();
+        godLvl1Meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form lvl 1");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.CreateFirst(plugin, player, godLvl1Meta, ".RAGEForm.RAGELevel", plugin.getConfig().getInt("FormCosts.RAGE.Level1"), "" + ChatColor.GOLD);
+        godLvl1.setItemMeta(godLvl1Meta);
+        ItemStack godLvl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)4);
+        ItemMeta godLvl2Meta = godLvl2.getItemMeta();
+        godLvl2Meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form lvl 2");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl2Meta, 2, ".RAGEForm.RAGELevel", plugin.getConfig().getInt("FormCosts.RAGE.Level2"), "" + ChatColor.GOLD);
+        godLvl2.setItemMeta(godLvl2Meta);
+        ItemStack godLvl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)4);
+        ItemMeta godLvl3Meta = godLvl3.getItemMeta();
+        godLvl3Meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form lvl 3");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl3Meta, 3, ".RAGEForm.RAGELevel", plugin.getConfig().getInt("FormCosts.RAGE.Level3"), "" + ChatColor.GOLD);
+        godLvl3.setItemMeta(godLvl3Meta);
+        ItemStack godLvl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)4);
+        ItemMeta godLvl4Meta = godLvl4.getItemMeta();
+        godLvl4Meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form lvl 4");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl4Meta, 4, ".RAGEForm.RAGELevel", plugin.getConfig().getInt("FormCosts.RAGE.Level4"), "" + ChatColor.GOLD);
+        godLvl4.setItemMeta(godLvl4Meta);
+        ItemStack godLvl5 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)4);
+        ItemMeta godLvl5Meta = godLvl5.getItemMeta();
+        godLvl5Meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form lvl 5");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".RAGEForm.RAGELevel", plugin.getConfig().getInt("FormCosts.RAGE.Level5"), "" + ChatColor.GOLD);
+        godLvl5.setItemMeta(godLvl5Meta);
+        ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)11);
+        ItemMeta godTPMeta = godTP.getItemMeta();
+        if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGETP") == null) {
+            godTPMeta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage TP: " + ChatColor.RESET + ChatColor.GOLD + 0);
+            plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGETP", "0");
+        } else {
+            godTPMeta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + "Rage TP: " + ChatColor.RESET + ChatColor.GOLD + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGETP")));
+        }
+
+        godTP.setItemMeta(godTPMeta);
+        ItemStack exit = new ItemStack(Material.REDSTONE_BLOCK, 1);
+        ItemMeta exitMeta = exit.getItemMeta();
+        exitMeta.setDisplayName(ChatColor.RED + "Exit menu");
+        exit.setItemMeta(exitMeta);
+        inv.setItem(4, godTP);
+        inv.setItem(11, godLvl1);
+        inv.setItem(12, godLvl2);
+        inv.setItem(13, godLvl3);
+        inv.setItem(14, godLvl4);
+        inv.setItem(15, godLvl5);
+        inv.setItem(22, exit);
+        player.openInventory(inv);
+    }
+    
+    public static void openSSJ5Menu(Player player) {
+        Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, ChatColor.GRAY + "SSJ 5 Form Menu");
+        ItemStack godLvl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+        ItemMeta godLvl1Meta = godLvl1.getItemMeta();
+        godLvl1Meta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form lvl 1");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.CreateFirst(plugin, player, godLvl1Meta, ".SS5Form.SS5Level", plugin.getConfig().getInt("FormCosts.SS5.Level1"), "" + ChatColor.GRAY);
+        godLvl1.setItemMeta(godLvl1Meta);
+        ItemStack godLvl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+        ItemMeta godLvl2Meta = godLvl2.getItemMeta();
+        godLvl2Meta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form lvl 2");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl2Meta, 2, ".SS5Form.SS5Level", plugin.getConfig().getInt("FormCosts.SS5.Level2"), "" + ChatColor.GRAY);
+        godLvl2.setItemMeta(godLvl2Meta);
+        ItemStack godLvl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+        ItemMeta godLvl3Meta = godLvl3.getItemMeta();
+        godLvl3Meta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form lvl 3");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl3Meta, 3, ".SS5Form.SS5Level", plugin.getConfig().getInt("FormCosts.SS5.Level3"), "" + ChatColor.GRAY);
+        godLvl3.setItemMeta(godLvl3Meta);
+        ItemStack godLvl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+        ItemMeta godLvl4Meta = godLvl4.getItemMeta();
+        godLvl4Meta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form lvl 4");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl4Meta, 4, ".SS5Form.SS5Level", plugin.getConfig().getInt("FormCosts.SS5.Level4"), "" + ChatColor.GRAY);
+        godLvl4.setItemMeta(godLvl4Meta);
+        ItemStack godLvl5 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+        ItemMeta godLvl5Meta = godLvl5.getItemMeta();
+        godLvl5Meta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form lvl 5");
+        me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeItemLogic.Create(plugin, player, godLvl5Meta, 5, ".SS5Form.SS5Level", plugin.getConfig().getInt("FormCosts.SS5.Level5"), "" + ChatColor.GRAY);
+        godLvl5.setItemMeta(godLvl5Meta);
+        ItemStack godTP = new ItemStack(Material.INK_SACK, 1, (short)7);
+        ItemMeta godTPMeta = godTP.getItemMeta();
+        if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5TP") == null) {
+            godTPMeta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 TP: " + ChatColor.RESET + ChatColor.GRAY + 0);
+            plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5TP", "0");
+        } else {
+            godTPMeta.setDisplayName("" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 TP: " + ChatColor.RESET + ChatColor.GRAY + Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5TP")));
+        }
+
+        godTP.setItemMeta(godTPMeta);
+        ItemStack exit = new ItemStack(Material.REDSTONE_BLOCK, 1);
+        ItemMeta exitMeta = exit.getItemMeta();
+        exitMeta.setDisplayName(ChatColor.RED + "Exit menu");
+        exit.setItemMeta(exitMeta);
+        inv.setItem(4, godTP);
+        inv.setItem(11, godLvl1);
+        inv.setItem(12, godLvl2);
+        inv.setItem(13, godLvl3);
+        inv.setItem(14, godLvl4);
+        inv.setItem(15, godLvl5);
+        inv.setItem(22, exit);
+        player.openInventory(inv);
+    }
 
     @EventHandler
     public void onInventoryCLick(InventoryClickEvent e) {
@@ -528,6 +666,10 @@ public class Menu implements Listener {
         if (e.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "Kosmic Forms Menu")) {
             player = (Player)e.getWhoClicked();
             e.setCancelled(true);
+            if (e.getSlot() == 10) {
+                openSSJ5Menu(player);
+            }
+            
             if (e.getSlot() == 11) {
                 openMYMenu(player);
             }
@@ -547,9 +689,17 @@ public class Menu implements Listener {
             if (e.getSlot() == 15) {
                 openEVOMenu(player);
             }
+            
+            if (e.getSlot() == 16) {
+                openRAGEMenu(player);
+            }
 
             if (e.getSlot() == 4) {
                 openSelectFormMenu(player);
+            }
+            
+            if (e.getSlot() == 22) {
+                player.closeInventory();
             }
         }
 
@@ -672,10 +822,52 @@ public class Menu implements Listener {
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
                         plugin.saveConfig();
-                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.WHITE + "Mystic form");
+                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.AQUA + "Mystic form");
                         player.closeInventory();
                     }
                 } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.MYLevel")) == 0) {
+                    player.sendMessage(ChatColor.RED + "You do not have this form");
+                }
+            }
+            
+            if (e.getSlot() == 16) {
+                if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".RAGEForm.RAGELevel") == null) {
+                    player.sendMessage(ChatColor.RED + "You do not have this form");
+                } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel")) > 0) {
+                    if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm") == "RAGE") {
+                        player.sendMessage(ChatColor.RED + "Form already selected");
+                    } else {
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm", "RAGE");
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
+                        plugin.saveConfig();
+                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.GOLD + "Rage form");
+                        player.closeInventory();
+                    }
+                } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel")) == 0) {
+                    player.sendMessage(ChatColor.RED + "You do not have this form");
+                }
+            }
+            
+            if (e.getSlot() == 10) {
+                if (plugin.getConfig().getString("PlayerData." + player.getUniqueId() + ".SS5Form.SS5Level") == null) {
+                    player.sendMessage(ChatColor.RED + "You do not have this form");
+                } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5Level")) > 0) {
+                    if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm") == "SS5") {
+                        player.sendMessage(ChatColor.RED + "Form already selected");
+                    } else {
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm", "SS5");
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".UIForm.isUIEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", false);
+                        plugin.saveConfig();
+                        player.sendMessage(ChatColor.BLUE + "You have selected " + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 form");
+                        player.closeInventory();
+                    }
+                } else if (Integer.parseInt(plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.SS5Level")) == 0) {
                     player.sendMessage(ChatColor.RED + "You do not have this form");
                 }
             }
@@ -768,6 +960,24 @@ public class Menu implements Listener {
                         NBTManager.getInstance().writeForgeData(player, Forgadata);
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.BOLD + "MY form");
                         plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
+                    } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("RAGE")) {
+                        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                        PlayerPersisted.put("jrmcStatusEff", "");
+                        PlayerPersisted.put("jrmcState", 0);
+                        Forgadata.put("PlayerPersisted", PlayerPersisted);
+                        NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.GOLD + "Rage form");
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
+                    } else if (plugin.getConfig().getString("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("SS5")) {
+                        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
+                        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+                        PlayerPersisted.put("jrmcStatusEff", "");
+                        PlayerPersisted.put("jrmcState", 0);
+                        Forgadata.put("PlayerPersisted", PlayerPersisted);
+                        NBTManager.getInstance().writeForgeData(player, Forgadata);
+                        player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 form");
+                        plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", false);
                     }
 
                     plugin.getConfig().set("PlayerData." + player.getPlayer().getUniqueId() + ".SelectedForm", (Object)null);
@@ -936,6 +1146,62 @@ public class Menu implements Listener {
 
             if (e.getSlot() == 15) {
                 CreateUpgradeLogic.CreateFirst(player, ".MYForm.MYLevel", ".MYForm.MYTP", plugin.getConfig().getInt("FormCosts.MY.Level5"), "" + ChatColor.RESET + ChatColor.BLUE + "MY Form", "MY", 5);
+            }
+
+            if (e.getSlot() == 22) {
+                openMenu(player);
+            }
+        }
+        
+        if (e.getInventory().getName().equalsIgnoreCase(ChatColor.GOLD + "Rage Form Menu")) {
+            player = (Player)e.getWhoClicked();
+            e.setCancelled(true);
+            if (e.getSlot() == 11) {
+                CreateUpgradeLogic.CreateFirst(player, ".RAGEForm.RAGELevel", ".RAGEForm.RAGETP", plugin.getConfig().getInt("FormCosts.RAGE.Level1"), "" + ChatColor.RESET + ChatColor.GOLD + "RAGE Form", "RAGE", 1);
+            }
+
+            if (e.getSlot() == 12) {
+                CreateUpgradeLogic.CreateFirst(player, ".RAGEForm.RAGELevel", ".RAGEForm.RAGETP", plugin.getConfig().getInt("FormCosts.RAGE.Level2"), "" + ChatColor.RESET + ChatColor.GOLD + "RAGE Form", "RAGE", 2);
+            }
+
+            if (e.getSlot() == 13) {
+                CreateUpgradeLogic.CreateFirst(player, ".RAGEForm.RAGELevel", ".RAGEForm.RAGETP", plugin.getConfig().getInt("FormCosts.RAGE.Level3"), "" + ChatColor.RESET + ChatColor.GOLD + "RAGE Form", "RAGE", 3);
+            }
+
+            if (e.getSlot() == 14) {
+                CreateUpgradeLogic.CreateFirst(player, ".RAGEForm.RAGELevel", ".RAGEForm.RAGETP", plugin.getConfig().getInt("FormCosts.RAGE.Level4"), "" + ChatColor.RESET + ChatColor.GOLD + "RAGE Form", "RAGE", 4);
+            }
+
+            if (e.getSlot() == 15) {
+                CreateUpgradeLogic.CreateFirst(player, ".RAGEForm.RAGELevel", ".RAGEForm.RAGETP", plugin.getConfig().getInt("FormCosts.RAGE.Level5"), "" + ChatColor.RESET + ChatColor.GOLD + "RAGE Form", "RAGE", 5);
+            }
+
+            if (e.getSlot() == 22) {
+                openMenu(player);
+            }
+        }
+        
+        if (e.getInventory().getName().equalsIgnoreCase(ChatColor.GRAY + "SSJ 5 Form Menu")) {
+            player = (Player)e.getWhoClicked();
+            e.setCancelled(true);
+            if (e.getSlot() == 11) {
+                CreateUpgradeLogic.CreateFirst(player, ".SS5Form.SS5Level", ".SS5Form.SS5TP", plugin.getConfig().getInt("FormCosts.SS5.Level1"), "" + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form", "SSJ 5", 1);
+            }
+
+            if (e.getSlot() == 12) {
+                CreateUpgradeLogic.CreateFirst(player, ".SS5Form.SS5Level", ".SS5Form.SS5TP", plugin.getConfig().getInt("FormCosts.SS5.Level2"), "" + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form", "SSJ 5", 2);
+            }
+
+            if (e.getSlot() == 13) {
+                CreateUpgradeLogic.CreateFirst(player, ".SS5Form.SS5Level", ".SS5Form.SS5TP", plugin.getConfig().getInt("FormCosts.SS5.Level3"), "" + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form", "SSJ 5", 3);
+            }
+
+            if (e.getSlot() == 14) {
+                CreateUpgradeLogic.CreateFirst(player, ".SS5Form.SS5Level", ".SS5Form.SS5TP", plugin.getConfig().getInt("FormCosts.SS5.Level4"), "" + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form", "SSJ 5", 4);
+            }
+
+            if (e.getSlot() == 15) {
+                CreateUpgradeLogic.CreateFirst(player, ".SS5Form.SS5Level", ".SS5Form.SS5TP", plugin.getConfig().getInt("FormCosts.SS5.Level5"), "" + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form", "SSJ 5", 5);
             }
 
             if (e.getSlot() == 22) {

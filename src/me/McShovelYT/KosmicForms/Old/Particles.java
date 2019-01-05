@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import me.McShovelYT.KosmicForms.Old.Methods.GetStats;
 import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
@@ -96,10 +97,11 @@ public class Particles {
                         var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
 
                         for(var7 = 0; var7 < var8; ++var7) {
-                            player2 = var9[var7];
+                            player = var9[var7];
                             NBTEditor.Edit(player, "jrmcState2", 8);
-                            packet = new PacketPlayOutWorldParticles("", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
-                            ((CraftPlayer)player2).getHandle().playerConnection.sendPacket(packet);
+                        	NBTEditor.Edit(player, "jrmcStamina", 0);
+                        	NBTEditor.Edit(player, "jrmcBdy", GetStats.getCurHP(player) - 1000);
+                        	
                         }
                     }
                     
@@ -175,8 +177,42 @@ public class Particles {
                         }
                     }
                     
-                }
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".RAGEForm.isRAGEEnabled")) {
+                        loc = null;
+                        loc = player.getLocation();
+                        var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
 
+                        for(var7 = 0; var7 < var8; ++var7) {
+                            player2 = var9[var7];
+                            int mnd = NBTEditor.GetInt(player, "jrmcIntI");
+                            int Race = NBTEditor.GetInt(player, "jrmcRace");
+                            NBTEditor.Edit(player, "jrmcStatusEff", "CB");
+                            if (Race == 0 || Race == 3 || Race == 4) {
+                            	NBTEditor.Edit(player, "jrmcState", 1);
+                            } else {
+                            	NBTEditor.Edit(player, "jrmcState", 12);
+                            }
+                            NBTEditor.Edit(player, "jrmcRelease", (mnd/20000) + 100);
+                        }
+                    }
+                    
+                    if (Particles.plugin.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".SS5Form.isSS5Enabled")) {
+                        loc = null;
+                        loc = player.getLocation();
+                        var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
+
+                        for(var7 = 0; var7 < var8; ++var7) {
+                            player2 = var9[var7];
+                            int Race = NBTEditor.GetInt(player, "jrmcRace");
+                            if (Race == 0 || Race == 3 || Race == 4) {
+                            	NBTEditor.Edit(player, "jrmcState", 1);
+                            } else {
+                            	NBTEditor.Edit(player, "jrmcState", 14);
+                            	NBTEditor.Edit(player, "jrmcStatusEff", "OOOOOOOOOOOOOOOOOOOOOOOOOOO B");
+                            }
+                        }
+                    }
+                }
             }
         }).runTaskTimerAsynchronously(plugin, 0L, 5L);
     }

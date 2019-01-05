@@ -1,6 +1,6 @@
 name: KosmicOpenSRC
 main: me.McShovelYT.KosmicForms.Old.Main
-version: 2.5.2
+version: 3.0
 author: McShovelYT
 description: A custom forms plugin
 commands:
@@ -16,3 +16,7 @@ commands:
    kMenu:
       description: Opens form menu
       aliases: km
+   kBB:
+      description: Allows you to take damage in stamina instead of hp
+   kSenzu:
+      description: Gives an item to heal you fully

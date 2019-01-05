@@ -9,6 +9,8 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +24,9 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.McShovelYT.KosmicForms.Old.Methods.GetStats;
 import me.McShovelYT.KosmicForms.Old.Methods.Methods;
+import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 
 public class Main extends JavaPlugin implements Listener {
 	
@@ -50,9 +54,12 @@ public class Main extends JavaPlugin implements Listener {
     public void permissionsShit() {
         Permission SetFormPermission = new Permission("Kosmic.SetForm");
         Permission GiveFormTPPermission = new Permission("Kosmic.GiveFormTP");
+        Permission SenzuPermission = new Permission("Kosmic.Senzu");
         this.getServer().getPluginManager().addPermission(SetFormPermission);
         this.getServer().getPluginManager().addPermission(GiveFormTPPermission);
+        this.getServer().getPluginManager().addPermission(SenzuPermission);
     }
+    
     
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -136,35 +143,52 @@ public class Main extends JavaPlugin implements Listener {
 
     }
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
 		
 		PlayerInventory inv = player.getInventory();
-		ItemStack a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
+		ItemStack a = null;
+		try {
+			Class.forName("mod.mcreator.mcreator_zphone");
+			a = new ItemStack(490, 1);
+		} catch (ClassNotFoundException var7) {
+			a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
+		}
 		
 		if (inv.contains(a, 1)) {
-			
+			;
 		} else {
 			inv.addItem(a);
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void openMenu(PlayerInteractEvent e) {
 		ItemStack a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
-		
-		if (e.getPlayer().getItemInHand().equals(a)) {
+		ItemStack b = Methods.createItemStack(Material.EMERALD, 1, ChatColor.GREEN + "Senzu Bean", "Fully heals you!");
+		if (e.getPlayer().getItemInHand().equals(a) || e.getPlayer().getItemInHand().equals(new ItemStack(490, 1))) {
 			Menu.openMenu(e.getPlayer());
+		}
+		
+		if (e.getPlayer().getItemInHand().equals(b)) {
+			NBTEditor.Edit(e.getPlayer(), "jrmcBdy", GetStats.getMaxHP(e.getPlayer()));
+			NBTEditor.Edit(e.getPlayer(), "jrmcEnrgy", GetStats.getMaxEnrgy(e.getPlayer()));
+			NBTEditor.Edit(e.getPlayer(), "jrmcStamina", GetStats.getMaxStam(e.getPlayer()));
+			CraftInventory ci = (CraftInventory)e.getPlayer().getInventory();
+			ci.removeItem(b);
 		}
 	}
 	
 	
+	@SuppressWarnings({ "deprecation" })
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e) {
 		ItemStack a = Methods.createItemStack(Material.NETHER_STAR, 1, ChatColor.DARK_PURPLE + "Transformations", "");
 
-		if (e.getItemDrop().getItemStack().equals(a)) {
+		if (e.getItemDrop().getItemStack().equals(a) ||  e.getItemDrop().getItemStack().equals(new ItemStack(490, 1))) {
 			e.setCancelled(true);
 			Methods.sendActionBar(e.getPlayer(), ChatColor.RED + "You can't drop this item");
 		}
@@ -192,6 +216,8 @@ public class Main extends JavaPlugin implements Listener {
 	        			list.add("sk");
 	        			list.add("evo");
 	        			list.add("my");
+	        			list.add("rage");
+	        			list.add("ss5");
 	        	}
 	        	
 	        	return list;
@@ -220,6 +246,8 @@ public class Main extends JavaPlugin implements Listener {
         			list.add("sk");
         			list.add("evo");
         			list.add("my");
+        			list.add("rage");
+        			list.add("ss5");
 	        	}
 	        	
 	        	return list;
@@ -279,13 +307,23 @@ public class Main extends JavaPlugin implements Listener {
                                 this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".MYForm.isMYEnabled", false);
                                 this.saveConfig();
                                 sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.WHITE + " Mystic form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
+                            } else if (args[1].equalsIgnoreCase("RAGE")) {
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.RAGELevel", args[2]);
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.isRAGEEnabled", false);
+                                this.saveConfig();
+                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.GOLD + " Rage form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
+                            } else if (args[1].equalsIgnoreCase("SS5")) {
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.SS5Level", args[2]);
+                                this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.isSS5Enabled", false);
+                                this.saveConfig();
+                                sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.RESET + ChatColor.GRAY + " SSJ 5 form " + ChatColor.BLUE + "Level " + ChatColor.YELLOW + args[2]);
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[1] + ChatColor.RED + " Is not a valid form");
                             }
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/kSetForm <USERNAME> <GOD/UI/SK/EVO/MY> <LEVEL>");
+                    sender.sendMessage(ChatColor.RED + "/kSetForm <USERNAME> <GOD/UI/SK/EVO/MY/RAGE/SS5> <LEVEL>");
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
@@ -393,13 +431,49 @@ public class Main extends JavaPlugin implements Listener {
                                 } else {
                                     sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
                                 }
+                            } else if (args[2].equalsIgnoreCase("RAGE")) {
+                                if (args[0].equalsIgnoreCase("set")) {
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.RAGETP", args[3]);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.GOLD + " Rage form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
+                                } else if (args[0].equalsIgnoreCase("add")) {
+                                    if (this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.RAGETP") == null) {
+                                        this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.RAGETP", "0");
+                                    }
+
+                                    x = Integer.parseInt(this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.RAGETP"));
+                                    x2 = Integer.parseInt(args[3]);
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".RAGEForm.RAGETP", x + x2);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.GOLD + " Rage form TP ");
+                                } else {
+                                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
+                                }
+                            } else if (args[2].equalsIgnoreCase("SS5")) {
+                                if (args[0].equalsIgnoreCase("set")) {
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.SS5TP", args[3]);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully set " + ChatColor.YELLOW + playerToGiveFormTP.getName() + ChatColor.BLUE + "'s " + ChatColor.RESET + ChatColor.GRAY + " SSJ 5 form TP " + ChatColor.BLUE + "amount to " + ChatColor.YELLOW + args[3]);
+                                } else if (args[0].equalsIgnoreCase("add")) {
+                                    if (this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.SS5TP") == null) {
+                                        this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.SS5TP", "0");
+                                    }
+
+                                    x = Integer.parseInt(this.getConfig().getString("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.SS5TP"));
+                                    x2 = Integer.parseInt(args[3]);
+                                    this.getConfig().set("PlayerData." + playerToGiveFormTP.getUniqueId() + ".SS5Form.SS5TP", x + x2);
+                                    this.saveConfig();
+                                    sender.sendMessage(ChatColor.BLUE + "You have successfully given " + ChatColor.YELLOW + playerToGiveFormTP.getName() + " " + ChatColor.YELLOW + x2 + ChatColor.RESET + ChatColor.GRAY + " SSJ 5 form TP ");
+                                } else {
+                                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <FORM> <ANOUNT>");
+                                }
                             } else {
                                 sender.sendMessage(ChatColor.YELLOW + args[2] + ChatColor.RED + " Is not a valid form");
                             }
                         }
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <GOD/UI/SK/EVO/MY> <ANOUNT>");
+                    sender.sendMessage(ChatColor.RED + "/kGiveFormTP <SET/ADD> <USERNAME> <GOD/UI/SK/EVO/MY/RAGE/SS5> <ANOUNT>");
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions");
@@ -407,7 +481,31 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (cmd.getName().equalsIgnoreCase("kMenu")) {
-                Menu.openMenu((Player) sender);
+            Menu.openMenu((Player) sender);
+        }
+        
+        if (cmd.getName().equalsIgnoreCase("kSenzu")) {
+        	if (sender.hasPermission("Kosmic.Senzu")) {
+        		ItemStack b = Methods.createItemStack(Material.EMERALD, 1, ChatColor.GREEN + "Senzu Bean", "Fully heals you!");
+    			CraftInventory ci = (CraftInventory) ((CraftPlayer) sender).getInventory();
+    			ci.addItem(b);
+        	}
+        }
+        
+        if (cmd.getName().equalsIgnoreCase("kBB")) {
+            Player player = ((Player) sender);
+            if (this.getConfig().get("PlayerData." + player.getUniqueId() + ".BB") != null) {
+            	if (this.getConfig().getBoolean("PlayerData." + player.getUniqueId() + ".BB")) {
+            		this.getConfig().set("PlayerData." + player.getUniqueId() + ".BB", false);
+            		sender.sendMessage(ChatColor.RED + "You have disabled Brute Block");
+            	} else {
+            		this.getConfig().set("PlayerData." + player.getUniqueId() + ".BB", true);
+            		sender.sendMessage(ChatColor.RED + "You have enabled Brute Block");
+            	}
+            } else {
+            	this.getConfig().set("PlayerData." + player.getUniqueId() + ".BB", true);
+            	sender.sendMessage(ChatColor.RED + "You have enabled Brute Block");
+            }
         }
 	return false;
     }
@@ -725,27 +823,27 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         if (this.getConfig().getDouble("FormRegens.SK.Level1") == 0.0D) {
-            this.getConfig().set("FormRegens.SK.Level1", 200000);
+            this.getConfig().set("FormRegens.SK.Level1", 0);
             this.saveConfig();
         }
 
         if (this.getConfig().getDouble("FormRegens.SK.Level2") == 0.0D) {
-            this.getConfig().set("FormRegens.SK.Level2", 300000);
+            this.getConfig().set("FormRegens.SK.Level2", 0);
             this.saveConfig();
         }
 
         if (this.getConfig().getDouble("FormRegens.SK.Level3") == 0.0D) {
-            this.getConfig().set("FormRegens.SK.Level3", 400000);
+            this.getConfig().set("FormRegens.SK.Level3", 0);
             this.saveConfig();
         }
 
         if (this.getConfig().getDouble("FormRegens.SK.Level4") == 0.0D) {
-            this.getConfig().set("FormRegens.SK.Level4", 500000);
+            this.getConfig().set("FormRegens.SK.Level4", 0);
             this.saveConfig();
         }
 
         if (this.getConfig().getDouble("FormRegens.SK.Level5") == 0.0D) {
-            this.getConfig().set("FormRegens.SK.Level5", 600000);
+            this.getConfig().set("FormRegens.SK.Level5", 0);
             this.saveConfig();
         }
         
@@ -946,6 +1044,206 @@ public class Main extends JavaPlugin implements Listener {
 
         if (this.getConfig().getDouble("FormRegens.MY.Level5") == 0.0D) {
             this.getConfig().set("FormRegens.MY.Level5", 300000);
+            this.saveConfig();
+        }
+        
+        if (this.getConfig().getInt("FormCosts.RAGE.Level1") == 0) {
+            this.getConfig().set("FormCosts.RAGE.Level1", 1000000);
+            this.saveConfig();
+        }
+        
+        if (this.getConfig().getInt("FormDamages.RAGE.Level1") == 0) {
+            this.getConfig().set("FormDamages.RAGE.Level1", 22.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.RAGE.Level1") == 0.0D) {
+            this.getConfig().set("FormDefences.RAGE.Level1", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.RAGE.Level2") == 0) {
+            this.getConfig().set("FormCosts.RAGE.Level2", 1500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.RAGE.Level2") == 0) {
+            this.getConfig().set("FormDamages.RAGE.Level2", 15.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.RAGE.Level2") == 0.0D) {
+            this.getConfig().set("FormDefences.RAGE.Level2", 0.15D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.RAGE.Level3") == 0) {
+            this.getConfig().set("FormCosts.RAGE.Level3", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.RAGE.Level3") == 0) {
+            this.getConfig().set("FormDamages.RAGE.Level3", 24.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.RAGE.Level3") == 0.0D) {
+            this.getConfig().set("FormDefences.RAGE.Level3", 0.2D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.RAGE.Level4") == 0) {
+            this.getConfig().set("FormCosts.RAGE.Level4", 2500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.RAGE.Level4") == 0) {
+            this.getConfig().set("FormDamages.RAGE.Level4", 26.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.RAGE.Level4") == 0.0D) {
+            this.getConfig().set("FormDefences.RAGE.Level4", 0.25D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.RAGE.Level5") == 0) {
+            this.getConfig().set("FormCosts.RAGE.Level5", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.RAGE.Level5") == 0) {
+            this.getConfig().set("FormDamages.RAGE.Level5", 28.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.RAGE.Level5") == 0.0D) {
+            this.getConfig().set("FormDefences.RAGE.Level5", 0.3D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.RAGE.Level1") == 0.0D) {
+            this.getConfig().set("FormRegens.RAGE.Level1", 100500);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.RAGE.Level2") == 0.0D) {
+            this.getConfig().set("FormRegens.RAGE.Level2", 150500);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.RAGE.Level3") == 0.0D) {
+            this.getConfig().set("FormRegens.RAGE.Level3", 205000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.RAGE.Level4") == 0.0D) {
+            this.getConfig().set("FormRegens.RAGE.Level4", 255000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.RAGE.Level5") == 0.0D) {
+            this.getConfig().set("FormRegens.RAGE.Level5", 305000);
+            this.saveConfig();
+        }
+        
+        if (this.getConfig().getInt("FormCosts.SS5.Level1") == 0) {
+            this.getConfig().set("FormCosts.SS5.Level1", 1000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SS5.Level1") == 0) {
+            this.getConfig().set("FormDamages.SS5.Level1", 10.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SS5.Level1") == 0.0D) {
+            this.getConfig().set("FormDefences.SS5.Level1", 0.1D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SS5.Level2") == 0) {
+            this.getConfig().set("FormCosts.SS5.Level2", 1500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SS5.Level2") == 0) {
+            this.getConfig().set("FormDamages.SS5.Level2", 15.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SS5.Level2") == 0.0D) {
+            this.getConfig().set("FormDefences.SS5.Level2", 0.15D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SS5.Level3") == 0) {
+            this.getConfig().set("FormCosts.SS5.Level3", 2000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SS5.Level3") == 0) {
+            this.getConfig().set("FormDamages.SS5.Level3", 20.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SS5.Level3") == 0.0D) {
+            this.getConfig().set("FormDefences.SS5.Level3", 0.2D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SS5.Level4") == 0) {
+            this.getConfig().set("FormCosts.SS5.Level4", 2500000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SS5.Level4") == 0) {
+            this.getConfig().set("FormDamages.SS5.Level4", 25.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SS5.Level4") == 0.0D) {
+            this.getConfig().set("FormDefences.SS5.Level4", 0.25D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormCosts.SS5.Level5") == 0) {
+            this.getConfig().set("FormCosts.SS5.Level5", 3000000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getInt("FormDamages.SS5.Level5") == 0) {
+            this.getConfig().set("FormDamages.SS5.Level5", 30.0D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormDefences.SS5.Level5") == 0.0D) {
+            this.getConfig().set("FormDefences.SS5.Level5", 0.3D);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SS5.Level1") == 0.0D) {
+            this.getConfig().set("FormRegens.SS5.Level1", 100000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SS5.Level2") == 0.0D) {
+            this.getConfig().set("FormRegens.SS5.Level2", 150000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SS5.Level3") == 0.0D) {
+            this.getConfig().set("FormRegens.SS5.Level3", 200000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SS5.Level4") == 0.0D) {
+            this.getConfig().set("FormRegens.SS5.Level4", 250000);
+            this.saveConfig();
+        }
+
+        if (this.getConfig().getDouble("FormRegens.SS5.Level5") == 0.0D) {
+            this.getConfig().set("FormRegens.SS5.Level5", 300000);
             this.saveConfig();
         }
 

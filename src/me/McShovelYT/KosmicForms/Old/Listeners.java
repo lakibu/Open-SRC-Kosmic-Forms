@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.Plugin;
 
+import me.McShovelYT.KosmicForms.Old.Methods.GetStats;
 import me.McShovelYT.KosmicForms.Old.Utils.Fireworks;
 import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 import me.dpohvar.powernbt.api.NBTCompound;
@@ -230,10 +231,8 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.isMYEnabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.BOLD + "Mystic Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".MYForm.MYLevel") + ChatColor.BLUE + ".");
-                                    NBTEditor.Edit(player, "jrmcStatusEff", 0);
+                                    NBTEditor.Edit(player, "jrmcStatusEff", "");
                                     NBTEditor.Edit(player, "jrmcRelease", 100);
-                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
                                 if (level >= 25000) {
                                 if (mnd >= 4000) {
@@ -258,6 +257,87 @@ public class Listeners implements Listener {
                             }
                             }
 
+                            this.plugin.saveConfig();
+                        }
+                        
+                        if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("RAGE")) {
+                            if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".RAGEForm.isRAGEEnabled")) {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".RAGEForm.isRAGEEnabled", false);
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.GOLD + "Rage Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel") + ChatColor.BLUE + ".");
+                                    NBTEditor.Edit(player, "jrmcState", "");
+                                    NBTEditor.Edit(player, "jrmcStatusEff", "");
+                                    NBTEditor.Edit(player, "jrmcRelease", 100);
+                            } else {
+                            	
+                            	if (level >= 27500) {
+                            	
+                            		this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".RAGEForm.isRAGEEnabled", true);
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.GOLD + "Rage Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".RAGEForm.RAGELevel") + ChatColor.BLUE + "!");
+                                    
+                                    Fireworks.explosion(loc, Color.YELLOW, Color.AQUA);
+                                    
+                            	} else {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".RAGEForm.isRAGEEnabled", false);
+                                    player.sendMessage(ChatColor.RED + "Your level must be 27500 or higher to use this form");
+                            	}
+
+                                this.clickPlayers.put(e.getPlayer().getName(), currTime);
+                            }
+
+                            this.plugin.saveConfig();
+                        }
+                        
+                        if (this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SelectedForm").equalsIgnoreCase("SS5")) {
+                            if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled")) {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", false);
+                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.SS5Level") + ChatColor.BLUE + ".");
+                                    PlayerPersisted.put("jrmcState", 14);
+                                    PlayerPersisted.put("jrmcStatusEff", "");
+                                    int Race = PlayerPersisted.getInt("jrmcRace");
+                                    if (Race == 1) {
+                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                    }
+                                    if (Race == 2) {
+                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                    }
+                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
+                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                            } else {
+                            	
+                            	if (level >= 32500) {
+                            		int State = PlayerPersisted.getInt("jrmcState");
+                            			if (State == 14) {
+                            	
+		                            		this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", true);
+		                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.SS5Level") + ChatColor.BLUE + "!");
+		                                    
+		                                    String var1 = PlayerPersisted.getString("jrmcDNS");
+		                                    int Race = PlayerPersisted.getInt("jrmcRace");
+		                                    
+		                                    if (Race == 1) {
+		                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
+		                                    PlayerPersisted.put("jrmcDNS", "0200c0018os5010016nKR11umf00000000000000000zSSL0zSSL");
+		                                    }
+		                                    if (Race == 2) {
+		                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
+		                                    PlayerPersisted.put("jrmcDNS", "0200c0018os5010016nKR11umf00000000000000000zSSL0zSSL");
+		                                    }
+		                                    
+		                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
+		                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+		                                    
+		                                    Fireworks.explosion(loc, Color.YELLOW, Color.WHITE);
+                                    
+                            			} else {
+                                            this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", false);
+                                            player.sendMessage(ChatColor.RED + "You must be in SSJ4 to use this form");
+                            			}
+                            	} else {
+                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", false);
+                                    player.sendMessage(ChatColor.RED + "Your level must be 32500 or higher to use this form");
+                            	}
+                                this.clickPlayers.put(e.getPlayer().getName(), currTime);
+                            }
                             this.plugin.saveConfig();
                         }
                     }
@@ -296,6 +376,14 @@ public class Listeners implements Listener {
             damaged = (Player)e.getEntity();
             double x2;
             int x;
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".BB")) {
+            	double dmg1 = e.getDamage();
+            	double dmg = dmg1 * 100.0D;
+            	e.setCancelled(true);
+            	NBTEditor.Edit(damaged, "jrmcStamina", GetStats.getCurStam(damaged) - dmg);
+            	NBTEditor.Edit(damaged, "jrmcBdy", GetStats.getCurHP(damaged) + dmg1);
+            }
             
             if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".GodForm.isGodEnabled")) {
                 if (!damaged.isOp()) {
@@ -660,6 +748,154 @@ public class Listeners implements Listener {
 
                     if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) >= 5) {
                         x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.MY.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+                }
+            }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".RAGEForm.isRAGEEnabled")) {
+                if (!damaged.isOp()) {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) >= 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+                } else {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) >= 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.RAGE.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+                }
+            }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".SS5Form.isSS5Enabled")) {
+                if (!damaged.isOp()) {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) >= 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level5");
+                        x = (int)Math.round(x2);
+                        damaged.setOp(true);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                        damaged.setOp(false);
+                    }
+                } else {
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 1) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level1");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 2) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level2");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 3) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level3");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 4) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level4");
+                        x = (int)Math.round(x2);
+                        damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
+                    }
+
+                    if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) >= 5) {
+                        x2 = e.getDamage() * this.plugin.getConfig().getDouble("FormDefences.SS5.Level5");
                         x = (int)Math.round(x2);
                         damaged.chat("/jrmcheal body " + x + 100 + " " + damaged.getName());
                     }
@@ -781,6 +1017,52 @@ public class Listeners implements Listener {
 
                 if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".MYForm.MYLevel")) >= 5) {
                     ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.MY.Level5") - 1.0D));
+                }
+            }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".RAGEForm.isRAGEEnabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 1) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.RAGE.Level1") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 2) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.RAGE.Level2") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 3) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.RAGE.Level3") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) == 4) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.RAGE.Level4") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".RAGEForm.RAGELevel")) >= 5) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.RAGE.Level5") - 1.0D));
+                }
+            }
+            
+            if (this.plugin.getConfig().getBoolean("PlayerData." + damaged.getUniqueId() + ".SS5Form.isSS5Enabled")) {
+                int str = NBTEditor.GetInt(damaged, "jrmcStrI");
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 1) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SS5.Level1") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 2) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SS5.Level2") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 3) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SS5.Level3") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) == 4) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SS5.Level4") - 1.0D));
+                }
+
+                if (Integer.parseInt(this.plugin.getConfig().getString("PlayerData." + damaged.getUniqueId() + ".SS5Form.SS5Level")) >= 5) {
+                    ((Damageable)e.getEntity()).damage((double)str * 3.5D * (this.plugin.getConfig().getInt("FormDamages.SS5.Level5") - 1.0D));
                 }
             }
         }

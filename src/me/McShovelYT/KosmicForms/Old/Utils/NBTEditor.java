@@ -27,4 +27,11 @@ public class NBTEditor {
         int out = PlayerPersisted.getInt(NBTkey);
 		return out;
 	}
+	
+	public static String GetString(Player p, String NBTkey) {
+        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(p);
+        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
+        String out = PlayerPersisted.getString(NBTkey);
+		return out;
+	}
 }
