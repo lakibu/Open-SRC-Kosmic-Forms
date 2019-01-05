@@ -884,6 +884,7 @@ public class Menu implements Listener {
                         NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
                         NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
                         PlayerPersisted.put("jrmcState", 0);
+                        PlayerPersisted.put("jrmcTech1", "");
                         Forgadata.put("PlayerPersisted", PlayerPersisted);
                         NBTManager.getInstance().writeForgeData(player, Forgadata);
                         player.sendMessage(ChatColor.BLUE + "You have deselected " + ChatColor.DARK_PURPLE + "G.O.D form");

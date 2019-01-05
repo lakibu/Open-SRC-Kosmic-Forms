@@ -26,12 +26,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.McShovelYT.KosmicForms.Old.Methods.GetStats;
 import me.McShovelYT.KosmicForms.Old.Methods.Methods;
+import me.McShovelYT.KosmicForms.Old.Methods.Version;
 import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 
 public class Main extends JavaPlugin implements Listener {
 	
     public Main() {
     }
+    
 
     public void onEnable() {
         this.configShit();
@@ -44,6 +46,9 @@ public class Main extends JavaPlugin implements Listener {
         Particles.particles();
         Particles.regen();
         this.getLogger().warning("This ain't it chief");
+        Version.checkVersion();
+        String s = Version.getResultMessage();
+        this.getLogger().info(s);
     }
 
     public void onDisable() {
@@ -175,8 +180,9 @@ public class Main extends JavaPlugin implements Listener {
 		
 		if (e.getPlayer().getItemInHand().equals(b)) {
 			NBTEditor.Edit(e.getPlayer(), "jrmcBdy", GetStats.getMaxHP(e.getPlayer()));
-			NBTEditor.Edit(e.getPlayer(), "jrmcEnrgy", GetStats.getMaxEnrgy(e.getPlayer()));
+			NBTEditor.Edit(e.getPlayer(), "jrmcEnrgy", 4600000);
 			NBTEditor.Edit(e.getPlayer(), "jrmcStamina", GetStats.getMaxStam(e.getPlayer()));
+			e.getPlayer().setFoodLevel(20);
 			CraftInventory ci = (CraftInventory)e.getPlayer().getInventory();
 			ci.removeItem(b);
 		}

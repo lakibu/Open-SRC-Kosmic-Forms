@@ -64,7 +64,7 @@ public class Particles {
                             if (Race == 4) {
                                 PlayerPersisted.put("jrmcState", 6);
                             }
-
+                            PlayerPersisted.put("jrmcTech1", "Hakai;0;Kosmic_Assets;1;2;100;0;0;0;0;3;1;0;0;0;0;0;10;0;10,0,10,10,10,10,10");
                             Forgadata.put("PlayerPersisted", PlayerPersisted);
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
                             packet = new PacketPlayOutWorldParticles("witchMagic", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.2F, 0.5F, 0.2F, 0.05F, 5);
