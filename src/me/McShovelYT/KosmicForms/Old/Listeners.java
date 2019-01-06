@@ -70,7 +70,10 @@ public class Listeners implements Listener {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", false);
                                 e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.DARK_PURPLE + "G.O.D Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.GodLevel") + ChatColor.BLUE + ".");
                                 PlayerPersisted.put("jrmcState", 0);
-                                PlayerPersisted.put("jrmcTech1", "");
+                                PlayerPersisted.remove("jrmcTech1");
+                                PlayerPersisted.remove("jrmcTech2");
+                                PlayerPersisted.remove("jrmcTech3");
+                                PlayerPersisted.remove("jrmcTech4");
                                 Forgadata.put("PlayerPersisted", PlayerPersisted);
                                 NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {

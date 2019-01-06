@@ -1,6 +1,7 @@
 package me.McShovelYT.KosmicForms.Old;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -64,7 +65,10 @@ public class Particles {
                             if (Race == 4) {
                                 PlayerPersisted.put("jrmcState", 6);
                             }
-                            PlayerPersisted.put("jrmcTech1", "Hakai;0;Kosmic_Assets;1;2;100;0;0;0;0;3;1;0;0;0;0;0;10;0;10,0,10,10,10,10,10");
+                            PlayerPersisted.put("jrmcTech1", ChatColor.LIGHT_PURPLE + "Hakai" + ChatColor.RESET + ";0;Kosmic Assets;1;2;100;0;0;0;0;3;1;0;0;0;0;0;10;0;10,0,10,10,10,10,10");
+                            PlayerPersisted.put("jrmcTech2", "");
+                            PlayerPersisted.put("jrmcTech3", "");
+                            PlayerPersisted.put("jrmcTech4", "");
                             Forgadata.put("PlayerPersisted", PlayerPersisted);
                             NBTManager.getInstance().writeForgeData(player, Forgadata);
                             packet = new PacketPlayOutWorldParticles("witchMagic", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.2F, 0.5F, 0.2F, 0.05F, 5);
@@ -98,10 +102,10 @@ public class Particles {
 
                         for(var7 = 0; var7 < var8; ++var7) {
                             player = var9[var7];
-                            NBTEditor.Edit(player, "jrmcState2", 8);
                         	NBTEditor.Edit(player, "jrmcStamina", 0);
                         	NBTEditor.Edit(player, "jrmcBdy", GetStats.getCurHP(player) - 1000);
-                        	
+                            packet = new PacketPlayOutWorldParticles("flame", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
+                            ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
                         }
                     }
                     
