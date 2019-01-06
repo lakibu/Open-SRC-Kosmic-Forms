@@ -74,6 +74,10 @@ public class Listeners implements Listener {
                                 PlayerPersisted.remove("jrmcTech2");
                                 PlayerPersisted.remove("jrmcTech3");
                                 PlayerPersisted.remove("jrmcTech4");
+                                int Race = PlayerPersisted.getInt("jrmcRace");
+                                if (Race == 3) {
+                                	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                }
                                 Forgadata.put("PlayerPersisted", PlayerPersisted);
                                 NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
@@ -82,6 +86,13 @@ public class Listeners implements Listener {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.isGodEnabled", true);
                                 e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.DARK_PURPLE + "G.O.D Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".GodForm.GodLevel") + ChatColor.BLUE + "!");
                             	
+                                String var1 = PlayerPersisted.getString("jrmcDNS");
+                                int Race = PlayerPersisted.getInt("jrmcRace");
+                                if (Race == 3) {
+                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
+                                NBTEditor.Edit(player, "jrmcDNS", "0300a0000000010006kry0UdeL0U9DP000000000000PEEB0PEEB");
+                                }
+                                
                                 Fireworks.explosion(player.getLocation(), Color.PURPLE, Color.FUCHSIA);
                                 
                             	} else {
@@ -198,27 +209,31 @@ public class Listeners implements Listener {
                                 	}
                                     NBTEditor.Edit(player, "jrmcState", 0);
                                     NBTEditor.Edit(player, "jrmcStatusEff", "");
-                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
                             } else {
                             	
                             	if (level >= 30000) {
-                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
-                                	int Purity = PlayerPersisted.getInt("jrmcAlign");
-                                	Color color = Color.WHITE;
-                                	Color color2 = Color.WHITE;
-                                	
-                                	if (Purity >= 51) {
-                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
-                                    	color = Color.BLUE;
-                                    	color2 = Color.AQUA;
-                                	} else {
-                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
-                                    	color = Color.PURPLE;
-                                    	color2 = Color.FUCHSIA;
-                                	}
-                                    
-                                	Fireworks.explosion(loc, color, color2);
+                            		String s = NBTEditor.GetString(player, "jrmcSSlts");
+                            		if (s.contains("GF1") || s.contains("GF2") || s.contains("GF9")) {
+	                                	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", true);
+	                                	int Purity = PlayerPersisted.getInt("jrmcAlign");
+	                                	Color color = Color.WHITE;
+	                                	Color color2 = Color.WHITE;
+	                                	
+	                                	if (Purity >= 51) {
+	                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.BLUE + "Mastered SS Blue level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+	                                    	color = Color.BLUE;
+	                                    	color2 = Color.AQUA;
+	                                	} else {
+	                                    	e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.DARK_PURPLE + "Mastered SS Rose level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.EVOLevel") + ChatColor.BLUE + "!");
+	                                    	color = Color.PURPLE;
+	                                    	color2 = Color.FUCHSIA;
+	                                	}
+	                                    
+	                                	Fireworks.explosion(loc, color, color2);
+                            		} else {
+                                    	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
+                                    	player.sendMessage(ChatColor.RED + "You must have GodForm lvl 2 or higher to use this form");
+                            		}
                             	} else {
                                 	this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".EVOForm.isEVOEnabled", false);
                                     player.sendMessage(ChatColor.RED + "Your level must be 30000 or higher to use this form");

@@ -101,7 +101,8 @@ public class Particles {
                         var8 = (var9 = Bukkit.getServer().getOnlinePlayers()).length;
 
                         for(var7 = 0; var7 < var8; ++var7) {
-                            player = var9[var7];
+                            player2 = var9[var7];
+                            NBTEditor.Edit(player, "jrmcState2", 20);
                         	NBTEditor.Edit(player, "jrmcStamina", 0);
                         	NBTEditor.Edit(player, "jrmcBdy", GetStats.getCurHP(player) - 1000);
                             packet = new PacketPlayOutWorldParticles("flame", (float)loc.getX(), (float)loc.getY() + 1.0F, (float)loc.getZ(), 0.5F, 0.9F, 0.5F, 0.0F, 5);
