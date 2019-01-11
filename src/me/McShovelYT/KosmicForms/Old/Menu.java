@@ -15,6 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 import me.McShovelYT.KosmicForms.Old.Methods.CreateUpgradeLogic;
 import me.McShovelYT.KosmicForms.Old.Methods.Methods;
+import me.McShovelYT.KosmicForms.Old.Utils.NBTEditor;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 
@@ -35,9 +36,7 @@ public class Menu implements Listener {
     	int help3;
     	String help4;
     	
-        NBTCompound Forgadata = NBTManager.getInstance().readForgeData(player);
-        NBTCompound PlayerPersisted = (NBTCompound)Forgadata.get("PlayerPersisted");
-    	int Purity = PlayerPersisted.getInt("jrmcAlign");
+    	int Purity = NBTEditor.GetInt(player, "jrmcAlign");
     	
     	if (Purity >= 51) {
     		help2 = 0;
@@ -61,7 +60,7 @@ public class Menu implements Listener {
         ItemStack MY = Methods.createItemStack(Material.INK_SACK, 6, "" + ChatColor.AQUA + ChatColor.BOLD + "Mystic Form" , "");
         ItemStack RAGE = Methods.createItemStack(Material.INK_SACK, 11, "" + ChatColor.GOLD + ChatColor.BOLD + "Rage Form" , "");
         ItemStack SSJ5 = Methods.createItemStack(Material.INK_SACK, 7, "" + ChatColor.GRAY + ChatColor.BOLD + "SSJ 5 Form" , "");
-        ItemStack exit = Methods.createItemStack(Material.REDSTONE_BLOCK, 0, "" + ChatColor.DARK_RED + ChatColor.BOLD + "Exit Menu", "");
+        ItemStack exit = Methods.createItemStack(Material.ANVIL, 0, "" + ChatColor.GREEN + "Save Menu", "");
         ItemStack selectForm = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta selectFormMeta = selectForm.getItemMeta();
         selectFormMeta.setDisplayName(ChatColor.BLUE + "Select Form");
@@ -699,7 +698,7 @@ public class Menu implements Listener {
             }
             
             if (e.getSlot() == 22) {
-                player.closeInventory();
+                SaveMenu.openMenu(player);
             }
         }
 

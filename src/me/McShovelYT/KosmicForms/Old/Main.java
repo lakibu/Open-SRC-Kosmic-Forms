@@ -42,6 +42,7 @@ public class Main extends JavaPlugin implements Listener {
         this.permissionsShit();
         new Listeners(this);
         new Menu(this);
+        new SaveMenu(this);
         new Particles(this); 
         Particles.particles();
         Particles.regen();
@@ -263,6 +264,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
     
 
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
         if (cmd.getName().equalsIgnoreCase("kReload")) {
             if (sender.hasPermission("Kosmic.Reload")) {
@@ -512,6 +514,82 @@ public class Main extends JavaPlugin implements Listener {
             	this.getConfig().set("PlayerData." + player.getUniqueId() + ".BB", true);
             	sender.sendMessage(ChatColor.RED + "You have enabled Brute Block");
             }
+        }
+        
+        if(cmd.getName().equalsIgnoreCase("kGet")) {
+	        length = args.length;
+	        if (length != 2) {
+	            if (length == 1) {
+	                if (args[0].equalsIgnoreCase("HairColor")) {
+	                    sender.sendMessage(ChatColor.BLUE + "Your hair color is " + ChatColor.YELLOW + NBTEditor.getHairColor((Player)sender));
+	                } else if (args[0].equalsIgnoreCase("AuraColor")) {
+	                    sender.sendMessage(ChatColor.BLUE + "Your aura color is " + ChatColor.YELLOW + NBTEditor.getAuraColor((Player)sender));
+	                } else if (args[0].equalsIgnoreCase("TailColor")) {
+	                    sender.sendMessage(ChatColor.BLUE + "Your tail color is " + ChatColor.YELLOW + NBTEditor.getTailColor((Player)sender));
+	                } else {
+	                    sender.sendMessage(ChatColor.RED + "/kGet <AURACOLOR/HAIRCOLOR/TAILCOLOR> {PLAYER}");
+	                }
+	            } else {
+	                sender.sendMessage(ChatColor.RED + "/kGet <AURACOLOR/HAIRCOLOR/TAILCOLOR> {PLAYER}");
+	            }
+	        } else {
+	            Player player1;
+	            int var20;
+	            int var21;
+	            Player[] var22;
+	            boolean validPlayer1;
+				if (args[0].equalsIgnoreCase("HairColor")) {
+	                validPlayer1 = false;
+	                var20 = (var22 = Bukkit.getServer().getOnlinePlayers()).length;
+	
+	                for(var21 = 0; var21 < var20; ++var21) {
+	                    player1 = var22[var21];
+	                    if (player1.getName().equalsIgnoreCase(args[1])) {
+	                        validPlayer1 = true;
+	                        sender.sendMessage(ChatColor.YELLOW + player1.getName() + ChatColor.BLUE + "'s hair color is " + ChatColor.YELLOW + NBTEditor.getHairColor(player1));
+	                        break;
+	                    }
+	                }
+	
+	                if (!validPlayer1) {
+	                    sender.sendMessage(ChatColor.RED + "Invalid player");
+	                }
+	            } else if (args[0].equalsIgnoreCase("AuraColor")) {
+	                validPlayer1 = false;
+	                var20 = (var22 = Bukkit.getServer().getOnlinePlayers()).length;
+	
+	                for(var21 = 0; var21 < var20; ++var21) {
+	                    player1 = var22[var21];
+	                    if (player1.getName().equalsIgnoreCase(args[1])) {
+	                        validPlayer1 = true;
+	                        sender.sendMessage(ChatColor.YELLOW + player1.getName() + ChatColor.BLUE + "'s aura color is " + ChatColor.YELLOW + NBTEditor.getAuraColor(player1));
+	                        break;
+	                    }
+	                }
+	
+	                if (!validPlayer1) {
+	                    sender.sendMessage(ChatColor.RED + "Invalid player");
+	                }
+	            } else if (!args[0].equalsIgnoreCase("TailColor")) {
+	                sender.sendMessage(ChatColor.RED + "/kGet <AURACOLOR/HAIRCOLOR/TAILCOLOR> {PLAYER}");
+	            } else {
+	                validPlayer1 = false;
+	                var20 = (var22 = Bukkit.getServer().getOnlinePlayers()).length;
+	
+	                for(var21 = 0; var21 < var20; ++var21) {
+	                    player1 = var22[var21];
+	                    if (player1.getName().equalsIgnoreCase(args[1])) {
+	                        validPlayer1 = true;
+	                        sender.sendMessage(ChatColor.YELLOW + player1.getName() + ChatColor.BLUE + "'s tail color is " + ChatColor.YELLOW + NBTEditor.getTailColor(player1));
+	                        break;
+	                    }
+	                }
+	
+	                if (!validPlayer1) {
+	                    sender.sendMessage(ChatColor.RED + "Invalid player");
+	                }
+	            }
+	        }
         }
 	return false;
     }

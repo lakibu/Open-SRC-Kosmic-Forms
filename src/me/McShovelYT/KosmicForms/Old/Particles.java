@@ -15,6 +15,7 @@ import me.dpohvar.powernbt.api.NBTManager;
 import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 
 public class Particles {
+
     static Plugin plugin = Main.getPlugin(Main.class);
 
     public Particles(Main plugin) {
@@ -30,7 +31,7 @@ public class Particles {
 
                 for(int var2 = 0; var2 < var3; ++var2) {
                     Player player = var4[var2];
-                    Location loc;
+                    Location loc = player.getLocation();
                     Player player2;
                     int var7;
                     int var8;

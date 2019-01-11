@@ -116,19 +116,8 @@ public class Listeners implements Listener {
                                     NBTManager.getInstance().writeForgeData(player, Forgadata);
                                 } else {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I Form" + ChatColor.BLUE + ".");
-                                    PlayerPersisted.put("jrmcStatusEff", "");
-                                    int Race = PlayerPersisted.getInt("jrmcRace");
-                                    if (Race == 0) {
-                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
-                                    }
-                                    if (Race == 1) {
-                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
-                                    }
-                                    if (Race == 2) {
-                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
-                                    }
-                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                                    NBTEditor.Edit(player, "jrmcStatusEff", "");
+                                    NBTEditor.setHairColor(player, (String) this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
                                 }
                             } else {
                             	
@@ -142,22 +131,9 @@ public class Listeners implements Listener {
                                     
                                 } else {
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.WHITE + ChatColor.BOLD + "M.U.I Form" + ChatColor.BLUE + "!");
-                                    String var1 = PlayerPersisted.getString("jrmcDNS");
-                                    int Race = PlayerPersisted.getInt("jrmcRace");
-                                    if (Race == 0) {
+                                    String var1 = NBTEditor.getHairColor(player);
                                     this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
-                                    PlayerPersisted.put("jrmcDNS", "020000010oa7010016nKR0rgre00000000000000000PCEb0PCEb");
-                                    }
-                                    if (Race == 1) {
-                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
-                                    PlayerPersisted.put("jrmcDNS", "020000010oa7010016nKR0rgre00000000000000000PCEb0PCEb");
-                                    }
-                                    if (Race == 2) {
-                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
-                                    PlayerPersisted.put("jrmcDNS", "020000010oa7010016nKR0rgre00000000000000000PCEb0PCEb");
-                                    }
-                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                                    NBTEditor.setHairColor(player, "17ik5");
                                     
                                     Fireworks.explosion(player.getLocation(), Color.WHITE, Color.SILVER);
                                     
@@ -181,7 +157,7 @@ public class Listeners implements Listener {
                             	
                             	if (level >= 15000) {
                             	
-                                this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", true);
+                            		this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.isSKEnabled", true);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.RED + "S.K Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SKForm.SKLevel") + ChatColor.BLUE + "!");
                                     
                                     Fireworks.explosion(loc, Color.RED, Color.fromRGB(80, 0, 0));
@@ -309,40 +285,23 @@ public class Listeners implements Listener {
                             if (this.plugin.getConfig().getBoolean("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled")) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", false);
                                     e.getPlayer().sendMessage(ChatColor.BLUE + "You have descended from " + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.SS5Level") + ChatColor.BLUE + ".");
-                                    PlayerPersisted.put("jrmcState", 14);
-                                    PlayerPersisted.put("jrmcStatusEff", "");
-                                    int Race = PlayerPersisted.getInt("jrmcRace");
-                                    if (Race == 1) {
-                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
-                                    }
-                                    if (Race == 2) {
-                                    	PlayerPersisted.put("jrmcDNS", this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
-                                    }
-                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+                                    NBTEditor.Edit(player, "jrmcState", 14);
+                                    NBTEditor.Edit(player, "jrmcStatusEff", "");
+                                    NBTEditor.setHairColor(player, (String) this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor"));
+                                    NBTEditor.setTailColor(player, (String) this.plugin.getConfig().get("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultTailColor"));
                             } else {
-                            	
                             	if (level >= 32500) {
                             		int State = PlayerPersisted.getInt("jrmcState");
                             			if (State == 14) {
-                            	
 		                            		this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.isSS5Enabled", true);
 		                                    e.getPlayer().sendMessage(ChatColor.BLUE + "You have ascended into " + ChatColor.RESET + ChatColor.GRAY + "SSJ 5 Form level " + this.plugin.getConfig().getString("PlayerData." + e.getPlayer().getUniqueId() + ".SS5Form.SS5Level") + ChatColor.BLUE + "!");
 		                                    
-		                                    String var1 = PlayerPersisted.getString("jrmcDNS");
-		                                    int Race = PlayerPersisted.getInt("jrmcRace");
-		                                    
-		                                    if (Race == 1) {
+		                                    String var1 = NBTEditor.getHairColor(player);
 		                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
-		                                    PlayerPersisted.put("jrmcDNS", "0200c0018os5010016nKR11umf00000000000000000zSSL0zSSL");
-		                                    }
-		                                    if (Race == 2) {
-		                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
-		                                    PlayerPersisted.put("jrmcDNS", "0200c0018os5010016nKR11umf00000000000000000zSSL0zSSL");
-		                                    }
-		                                    
-		                                    Forgadata.put("PlayerPersisted", PlayerPersisted);
-		                                    NBTManager.getInstance().writeForgeData(player, Forgadata);
+		                                    String var2 = NBTEditor.getTailColor(player);
+		                                    this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultTailColor", var2);
+		                                    NBTEditor.setHairColor(player, "17ik5");
+		                                    NBTEditor.setTailColor(player, "17ik5");
 		                                    
 		                                    Fireworks.explosion(loc, Color.YELLOW, Color.WHITE);
                                     
