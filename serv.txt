@@ -19,4 +19,4 @@ finalstand.pandaserv.net
 79.137.119.214
 142.44.181.5
 192.168.1.132
-megablock.mcraft.pro
+198.27.70.146
