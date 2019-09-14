@@ -6,7 +6,6 @@ saiyanseyeliner.serv.gs
 192.95.59.227
 DBCAether.crafted.pro
 172.107.169.203
-198.50.227.93
 finalstand.pandaserv.net
 71.132.179.63
 192.168.1.68
@@ -20,6 +19,4 @@ finalstand.pandaserv.net
 142.44.181.5
 192.168.1.132
 198.27.70.146
-198.50.227.93:25573
-198.50.227.93
 0.0.0.0
