@@ -90,7 +90,7 @@ public class Listeners implements Listener {
                                 int Race = PlayerPersisted.getInt("jrmcRace");
                                 if (Race == 3) {
                                 this.plugin.getConfig().set("PlayerData." + e.getPlayer().getUniqueId() + ".DefaultHairColor", var1);
-                                NBTEditor.Edit(player, "jrmcDNS", "0300a0000000010006kry0UdeL0U9DP000000000000PEEB0PEEB");
+                                NBTEditor.Edit(player, "jrmcDNS", "0200c000BHlS410016nKR0xQ4v00000000000203000Ti5p0QOE7");
                                 }
                                 
                                 Fireworks.explosion(player.getLocation(), Color.PURPLE, Color.FUCHSIA);
